@@ -7,10 +7,11 @@
 
 char *u16toax(u16 x, char str[]) {
   register u8 tmp;
-  tmp = x & 0xf, str[3] = tmp > 9 ? tmp + '7' : tmp + '0';
-  tmp = x >> 4 & 0xf, str[2] = tmp > 9 ? tmp + '7' : tmp + '0';
-  tmp = x >> 8 & 0xf, str[1] = tmp > 9 ? tmp + '7' : tmp + '0';
-  tmp = x >> 12 & 0xf, str[0] = tmp > 9 ? tmp + '7' : tmp + '0';
+  Hex4 y = {.word = x};
+  tmp = y.hexs.h0, str[3] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h1, str[2] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h2, str[1] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h3, str[0] = tmp > 9 ? tmp + '7' : tmp + '0';
   str[4] = 0;
   return str;
 }

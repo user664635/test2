@@ -64,7 +64,7 @@ typedef struct {
 
 typedef union {
   hex4 hexs;
-  u16 byte;
-} Hbyte4;
+  u16 word;
+} Hex4;
 
 #endif
