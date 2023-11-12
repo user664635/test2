@@ -8,12 +8,12 @@ static volatile u8 KEY;
 #endif
 
 inline u16 key16(void) {
-  Byte2 key;
-  KEY = 0b11111110, key.bytes[0] = KEY >> 4;
-  KEY = 0b11111101, key.bytes[0] |= KEY & 0xf0;
-  KEY = 0b11111011, key.bytes[1] = KEY >> 4;
-  KEY = 0b11110111, key.bytes[1] |= KEY & 0xf0;
-  return key.word;
+  u8 key[2];
+  KEY = 0b11111110, key[0] = KEY >> 4;
+  KEY = 0b11111101, key[0] |= KEY & 0xf0;
+  KEY = 0b11111011, key[1] = KEY >> 4;
+  KEY = 0b11110111, key[1] |= KEY & 0xf0;
+  return *(u16 *)key;
 }
 
 #endif

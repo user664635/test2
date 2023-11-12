@@ -40,7 +40,6 @@
 #define f80 long double
 #define f128 __float128
 
-
 typedef struct {
   u8 b0 : 1, b1 : 1, b2 : 1, b3 : 1, b4 : 1, b5 : 1, b6 : 1, b7 : 1;
 } bit8;
@@ -49,10 +48,5 @@ typedef union {
   bit8 bits;
   u8 byte;
 } Bit8;
-
-typedef union {
-  u8 bytes[2];
-  u16 word;
-} Byte2;
 
 #endif
