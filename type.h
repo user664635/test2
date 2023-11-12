@@ -50,4 +50,9 @@ typedef union {
   u8 byte;
 } Bit8;
 
+typedef union {
+  u8 bytes[2];
+  u16 word;
+} Byte2;
+
 #endif

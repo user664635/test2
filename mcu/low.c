@@ -22,18 +22,15 @@
 // 0b1---'0100
 #include "../driver/u8zt2046.c"
 
+
+#define KEY P1
 #include "../driver/key.h"
+
+
 // #include "io.c"
 #include "../driver/ds18b20.h"
 
 #define maxt 30 * 16
-
-
-u16 key(void) {
-  u16 k = 0;
-  key16(k, P1);
-  return ~k;
-}
 
 
 

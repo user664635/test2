@@ -1,12 +1,19 @@
-#ifndef _KEY_H_
-#define _KEY_H_
+#ifndef KEY_H
+#define KEY_H
 
-#define key16(out, KEY)                                                        \
-  do {                                                                         \
-    KEY = 0b11111110, out = KEY >> 4;                                          \
-    KEY = 0b11111101, out |= KEY & 0xf0;                                       \
-    KEY = 0b11111011, out |= KEY >> 4 << 8;                                    \
-    KEY = 0b11110111, out |= KEY >> 4 << 12;                                   \
-  } while (0)
+#include "../type.h"
+
+#ifndef KEY
+static volatile u8 KEY;
+#endif
+
+inline u16 key16(void) {
+  Byte2 key;
+  KEY = 0b11111110, key.bytes[0] = KEY >> 4;
+  KEY = 0b11111101, key.bytes[0] |= KEY & 0xf0;
+  KEY = 0b11111011, key.bytes[1] = KEY >> 4;
+  KEY = 0b11110111, key.bytes[1] |= KEY & 0xf0;
+  return key.word;
+}
 
 #endif
