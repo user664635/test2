@@ -49,4 +49,22 @@ typedef union {
   u8 byte;
 } Bit8;
 
+typedef struct {
+  u8 h0 : 4, h1 : 4;
+} hex2;
+
+typedef union {
+  hex2 hexs;
+  u8 byte;
+} Hex2;
+
+typedef struct {
+  u8 h0 : 4, h1 : 4, h2 : 4, h3 : 4;
+} hex4;
+
+typedef union {
+  hex4 hexs;
+  u16 byte;
+} Hbyte4;
+
 #endif
