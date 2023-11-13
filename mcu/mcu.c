@@ -2,11 +2,9 @@
 
 int main(void) {
   init();
-  char str[20];
   u8 t0, t1;
-  u8 byte = 0;
+  u16 x = 0;
   while (1) {
-
     // uint16_t t;
     // gett(t, P3_7);
     // uart_send_str(" 温度:");
@@ -26,11 +24,13 @@ int main(void) {
 
     // uart_send_str(u8toax(a,str));
 
-    t0 = TL0;
-    uart_send_str(u16toax(key16(), str));
-    t1 = TL0;
-    uart_send_str(u8toax(t1 - t0, str));
+    // x = key16();
+    // u16toax(x, str);
+    // t0 = TL0;
+    // uart_send_str(str);
+    // t1 = TL0;
+    // uart_send_str(u8toax(t1 - t0, str));
 
-    uart_send_str("\n\r");
+    // uart_send_str("\n\r");
   }
 }

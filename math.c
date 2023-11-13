@@ -5,7 +5,7 @@
 
 #define swap(a, b) a ^= b, b ^= a, a ^= b
 
-char *u16toax(u16 x, char str[]) {
+inline char *u16toax(u16 x, char str[]) {
   register u8 tmp;
   Hex4 y = {.word = x};
   tmp = y.hexs.h0, str[3] = tmp > 9 ? tmp + '7' : tmp + '0';

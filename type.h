@@ -40,6 +40,7 @@
 #define f80 long double
 #define f128 __float128
 
+// single bit access
 typedef struct {
   u8 b0 : 1, b1 : 1, b2 : 1, b3 : 1, b4 : 1, b5 : 1, b6 : 1, b7 : 1;
 } bit8;
@@ -49,6 +50,7 @@ typedef union {
   u8 byte;
 } Bit8;
 
+// hexdecimal number access
 typedef struct {
   u8 h0 : 4, h1 : 4;
 } hex2;
@@ -66,5 +68,11 @@ typedef union {
   hex4 hexs;
   u16 word;
 } Hex4;
+
+// byte access
+typedef union {
+  u8 bytes[2];
+  u16 word;
+} Byte2;
 
 #endif
