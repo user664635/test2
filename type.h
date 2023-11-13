@@ -69,6 +69,15 @@ typedef union {
   u16 word;
 } Hex4;
 
+typedef struct {
+  u8 h0 : 4, h1 : 4, h2 : 4, h3 : 4, h4 : 4, h5 : 4, h6 : 4, h7 : 4;
+} hex8;
+
+typedef union {
+  hex8 hexs;
+  u32 dword;
+} Hex8;
+
 // byte access
 typedef union {
   u8 bytes[2];

@@ -5,6 +5,21 @@
 
 #define swap(a, b) a ^= b, b ^= a, a ^= b
 
+inline char *u32toax(u32 x, char str[]) {
+  register u8 tmp;
+  Hex8 y = {.dword = x};
+  tmp = y.hexs.h0, str[7] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h1, str[6] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h2, str[5] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h3, str[4] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h4, str[3] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h5, str[2] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h6, str[1] = tmp > 9 ? tmp + '7' : tmp + '0';
+  tmp = y.hexs.h7, str[0] = tmp > 9 ? tmp + '7' : tmp + '0';
+  str[8] = 0;
+  return str;
+}
+
 inline char *u16toax(u16 x, char str[]) {
   register u8 tmp;
   Hex4 y = {.word = x};

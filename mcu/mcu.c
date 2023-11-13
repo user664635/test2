@@ -1,3 +1,6 @@
+
+#define LOW
+
 #include "low.c"
 
 int main(void) {
