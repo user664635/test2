@@ -84,4 +84,9 @@ typedef union {
   u16 word;
 } Byte2;
 
+typedef union {
+  u8 bytes[4];
+  u32 dword;
+} Byte4;
+
 #endif

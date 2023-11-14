@@ -1,4 +1,4 @@
-#include "../math.c"
+#include "../math.h"
 #include <8052.h>
 
 #define UART
@@ -48,7 +48,11 @@ void init(void) {
 }
 
 static u8 t20, t21, dt;
-static u32 data;
+static u8 count = 0;
+
+static u8 count = 0;
+
+static Byte4 data;
 static char str[20];
 static u8 count = 0;
 
@@ -59,14 +63,30 @@ inline void exint0(void) {
   t20 = t21;
 
   if (dt > 0x07 && dt < 0x0a) {
-    data <<= 1;
+    data.dword <<= 1;
   } else if (dt > 0x0f && dt < 0x12) {
-    data <<= 1;
-    ++data;
-  } else if (data) {
-    uart_send_str(u32toax(data, str));
+    data.dword <<= 1;
+    ++data.dword;
+  } else if (data.dword) {
+    uart_send_u8(data.bytes[3]);
+    uart_send_u8(~data.bytes[2]);
+    if (-1 == -1){
     uart_send_str("\n\r");
-    data = 0;
+      // uart_send_u8(data.bytes[3]);
+    }
+    // if (data.bytes[0] == ~data.bytes[1] && data.bytes[2] == ~data.bytes[3]) {
+    //   uart_send_str(u32toax(data.dword, str));
+    //   uart_send_str("\n\r");
+    // }
+    // uart_send_str(u8toax(~data.bytes[3], str));
+    // uart_send_str(u8toax(~data.bytes[2], str));
+    // uart_send_str(u8toax(~data.bytes[1], str));
+    // uart_send_str(u8toax(~data.bytes[0], str));
+    // uart_send_str("\n\r");
+    // uart_send_str(u32toax(data.dword, str));
+    // uart_send_str("\n\r");
+
+    data.dword = 0;
   }
 
   // uart_send_str(u8toax(dt, str));
