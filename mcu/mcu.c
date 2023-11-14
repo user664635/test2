@@ -29,10 +29,17 @@ int main(void) {
 
     // x = key16();
     // u16toax(x, str);
+
     // t0 = TL0;
-    // uart_send_str(str);
+    // x = TH0 << 8 | TL0;
     // t1 = TL0;
-    // uart_send_str(u8toax(t1 - t0, str));
+    // uart_send_u8n(t1 - t0);
+    // uart_send_u16n(x);
+
+    uart_send_u16n(1);
+
+
+
 
     // uart_send_str("\n\r");
   }

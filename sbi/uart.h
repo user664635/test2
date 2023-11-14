@@ -14,15 +14,64 @@ inline void uart_send_byte(u8 byte) {
   TI = 0;
 }
 
+inline void uart_send_enter(void) {
+  uart_send_byte('\n');
+  uart_send_byte('\r');
+}
+
+inline void uart_send_bool(u8 bit) { uart_send_byte(bit + '0'); }
+inline void uart_send_booln(u8 bit) {
+  uart_send_bool(bit);
+  uart_send_enter();
+}
+
+inline void uart_send_hex(u8 hex) {
+  uart_send_byte(hex > 9 ? hex + '7' : hex + '0');
+}
+inline void uart_send_hexn(u8 hex) {
+  uart_send_hex(hex);
+  uart_send_enter();
+}
+
 inline void uart_send_u8(u8 byte) {
   Hex2 tmp = {.byte = byte};
-  uart_send_byte(tmp.hexs.h1 > 9 ? tmp.hexs.h1 + '7' : tmp.hexs.h1 + '0');
-  uart_send_byte(tmp.hexs.h0 > 9 ? tmp.hexs.h0 + '7' : tmp.hexs.h0 + '0');
+  uart_send_hex(tmp.hexs.h1);
+  uart_send_hex(tmp.hexs.h0);
+}
+inline void uart_send_u8n(u8 byte) {
+  uart_send_u8(byte);
+  uart_send_enter();
+}
+
+inline void uart_send_u16(u16 word) {
+  Byte2 tmp = {.word = word};
+  uart_send_u8(tmp.bytes[1]);
+  uart_send_u8(tmp.bytes[0]);
+}
+inline void uart_send_u16n(u16 word) {
+  uart_send_u16n(word);
+  uart_send_enter();
+}
+
+inline void uart_send_u32(u32 dword) {
+  Byte4 tmp = {.dword = dword};
+  uart_send_u8(tmp.bytes[3]);
+  uart_send_u8(tmp.bytes[2]);
+  uart_send_u8(tmp.bytes[1]);
+  uart_send_u8(tmp.bytes[0]);
+}
+inline void uart_send_u32n(u32 dword) {
+  uart_send_u32n(dword);
+  uart_send_enter();
 }
 
 inline void uart_send_str(char *str) {
   while (*str)
     uart_send_byte(*str++);
+}
+inline void uart_send_strn(char *str) {
+  uart_send_str(str);
+  uart_send_enter();
 }
 
 #endif

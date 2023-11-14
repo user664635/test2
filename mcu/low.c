@@ -48,9 +48,6 @@ void init(void) {
 }
 
 static u8 t20, t21, dt;
-static u8 count = 0;
-
-static u8 count = 0;
 
 static Byte4 data;
 static char str[20];
@@ -68,10 +65,11 @@ inline void exint0(void) {
     data.dword <<= 1;
     ++data.dword;
   } else if (data.dword) {
-    uart_send_u8(data.bytes[3]);
-    uart_send_u8(~data.bytes[2]);
-    if (-1 == -1){
-    uart_send_str("\n\r");
+    u8 a = data.bytes[1], b = ~data.bytes[0];
+    uart_send_u8(a == (b));
+    if (data.bytes[1] == ~data.bytes[0]) {
+      uart_send_u8(data.bytes[1]);
+      uart_send_str("\n\r");
       // uart_send_u8(data.bytes[3]);
     }
     // if (data.bytes[0] == ~data.bytes[1] && data.bytes[2] == ~data.bytes[3]) {
