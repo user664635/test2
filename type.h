@@ -89,4 +89,37 @@ typedef union {
   u32 dword;
 } Byte4;
 
+typedef union {
+  u8 bytes[8];
+  u64 qword;
+} Byte8;
+
+// word access
+typedef union {
+  u16 words[2];
+  u32 dword;
+} Word2;
+
+typedef union {
+  u16 words[4];
+  u64 qword;
+} Word4;
+
+// dward access
+typedef union {
+  u32 dwords[2];
+  u64 qword;
+} Dword2;
+
+// typedef union {
+//   u32 dwords[4];
+//   u128 oword;
+// } Dword4;
+
+// // qward access
+// typedef union {
+//   u64 qwords[2];
+//   u128 oword;
+// } Qword2;
+
 #endif

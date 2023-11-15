@@ -1,5 +1,7 @@
 #include "../math.h"
+#ifdef LOW
 #include <8052.h>
+#endif
 
 #define UART
 #include "../sbi/uart.h"
@@ -30,13 +32,15 @@
 
 #define maxt 30 * 16
 
-#ifndef LOW
-static u8 EA, SM1, PCON, TMOD, TR0, TR1, TL0, TL1, TH0, TH1, EX0, EX1, IT0, IT1;
-#endif
+#ifdef LOW
+
+__sfr __at(0x8e) AUXR;
 
 void init(void) {
   EA = 1;
-  SM1 = 1;
+  ES = 1;
+  AUXR = 0xc0;
+  SCON = 0x50;
   PCON |= 0x80;
   TMOD = 0x21;
   TR1 = TR0 = 1;
@@ -46,6 +50,11 @@ void init(void) {
   EX0 = EX1 = 1;
   IT0 = IT1 = 1;
 }
+#endif
+
+#ifndef LOW
+static u8 EA, SM1, PCON, TMOD, TR0, TR1, TL0, TL1, TH0, TH1, EX0, EX1, IT0, IT1;
+#endif
 
 static u8 t20, t21, dt;
 
@@ -93,5 +102,7 @@ inline void exint0(void) {
 
 inline void exint1(void) { uart_send_str("\n\r"); }
 
+#ifdef LOW
 void __ex0(void) __interrupt(0) { exint0(); }
 void __ex1(void) __interrupt(2) { exint1(); }
+#endif

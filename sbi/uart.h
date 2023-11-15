@@ -19,9 +19,9 @@ inline void uart_send_enter(void) {
   uart_send_byte('\r');
 }
 
-inline void uart_send_bool(u8 bit) { uart_send_byte(bit + '0'); }
-inline void uart_send_booln(u8 bit) {
-  uart_send_bool(bit);
+#define uart_send_bit(bit) uart_send_byte((bit) + '0')
+inline void uart_send_bitn(u8 bit) {
+  uart_send_bit(bit);
   uart_send_enter();
 }
 
@@ -62,6 +62,20 @@ inline void uart_send_u32(u32 dword) {
 }
 inline void uart_send_u32n(u32 dword) {
   uart_send_u32n(dword);
+  uart_send_enter();
+}
+
+inline void uart_send_d32(u32 x) {
+  u8 str[11], i = 0;
+  do
+    str[i++] = x % 10;
+  while (x /= 10);
+
+  while (i)
+    uart_send_bit(str[--i]);
+}
+inline void uart_send_d32n(u32 x) {
+  uart_send_d32(x);
   uart_send_enter();
 }
 

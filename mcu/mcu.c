@@ -1,13 +1,15 @@
-
+// #include <8052.h>
 #define LOW
-
 #include "low.c"
 
 int main(void) {
   init();
-  u8 t0, t1;
-  u16 x = 0;
+  // u8 t0, t1;
+  // u16 x = 0;
+  u32 c = 0;
+  P2 = 0b10011111;
   while (1) {
+
     // uint16_t t;
     // gett(t, P3_7);
     // uart_send_str(" 温度:");
@@ -36,11 +38,7 @@ int main(void) {
     // uart_send_u8n(t1 - t0);
     // uart_send_u16n(x);
 
-    uart_send_u16n(1);
-
-
-
-
-    // uart_send_str("\n\r");
+  // uart_send_bit(1);
+  uart_send_d32n(++c);
   }
 }
