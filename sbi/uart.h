@@ -67,9 +67,12 @@ inline void uart_send_u32n(u32 dword) {
 
 inline void uart_send_d32(u32 x) {
   u8 str[11], i = 0;
-  do
-    str[i++] = x % 10;
-  while (x /= 10);
+  u32 tmp;
+  do {
+    tmp = x / 10;
+    str[i++] = x - (tmp << 3) - (tmp << 1);
+  }
+  while ((x = tmp));
 
   while (i)
     uart_send_bit(str[--i]);
