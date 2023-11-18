@@ -4,10 +4,10 @@
 #include "../type.h"
 
 #ifndef KEY
-static volatile u8 KEY;
+static volatile uint8_t KEY;
 #endif
 
-inline u16 key16(void) {
+inline uint16_t key16(void) {
   Hex4 key;
   KEY = 0b11101111, key.hexs.h0 = KEY;
   KEY = 0b11011111, key.hexs.h1 = KEY;

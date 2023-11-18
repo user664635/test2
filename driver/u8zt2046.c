@@ -3,13 +3,13 @@
 
 #include "../sbi/spi.h"
 
-u16 u8zt2046(u8 cmd) {
+uint16_t u8zt2046(uint8_t cmd) {
   spi_start();
   spi_send_byte(cmd);
-  u8 data[2];
+  uint8_t data[2];
   data[1] = spi_recv_byte();data[0] = spi_recv_byte();
   spi_stop();
-  return *(u16 *)data;
+  return *(uint16_t *)data;
 }
 
 #endif

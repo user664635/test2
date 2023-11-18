@@ -4,9 +4,9 @@
 
 int main(void) {
   init();
-  // u8 t0, t1;
-  // u16 x = 0;
-  u32 c = 0;
+  // uint8_t t0, t1;
+  // uint16_t x = 0;
+  uint32_t c = 0;
   P2 = 0b10011111;
   while (1) {
 
@@ -23,7 +23,7 @@ int main(void) {
     // uart_send_str(" 外部:");
     // uart_send_str(u16toax(u8zt2046(0b11100100), str));
 
-    // u8 a = (at24c02_read_byte_inaddr(100));
+    // uint8_t a = (at24c02_read_byte_inaddr(100));
     // ++a;
     // if (at24c02_write_byte(100, a)) uart_send_str("error writing\n");
 

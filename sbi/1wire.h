@@ -1,7 +1,7 @@
 #ifndef WIRE1_H
 #define WIRE1_H
 
-#define delay(t) for (register u8 i = t; --i;)
+#define delay(t) for (register uint8_t i = t; --i;)
 
 #define wire1_init(DQ)                                                         \
   do {                                                                         \

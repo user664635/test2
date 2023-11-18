@@ -5,8 +5,8 @@
 
 #define swap(a, b) a ^= b, b ^= a, a ^= b
 
-inline char *u32toax(u32 x, char str[]) {
-  u8 tmp;
+inline char *u32toax(uint32_t x, char str[]) {
+  uint8_t tmp;
   Hex8 y = {.dword = x};
   tmp = y.hexs.h0, str[7] = tmp > 9 ? tmp + '7' : tmp + '0';
   tmp = y.hexs.h1, str[6] = tmp > 9 ? tmp + '7' : tmp + '0';
@@ -20,8 +20,8 @@ inline char *u32toax(u32 x, char str[]) {
   return str;
 }
 
-inline char *u16toax(u16 x, char str[]) {
-  u8 tmp;
+inline char *u16toax(uint16_t x, char str[]) {
+  uint8_t tmp;
   Hex4 y = {.word = x};
   tmp = y.hexs.h0, str[3] = tmp > 9 ? tmp + '7' : tmp + '0';
   tmp = y.hexs.h1, str[2] = tmp > 9 ? tmp + '7' : tmp + '0';
@@ -31,8 +31,8 @@ inline char *u16toax(u16 x, char str[]) {
   return str;
 }
 
-inline char *u12toax(u16 x, char str[]) {
-  u8 tmp;
+inline char *u12toax(uint16_t x, char str[]) {
+  uint8_t tmp;
   tmp = x & 0xf, str[2] = tmp > 9 ? tmp + '7' : tmp + '0';
   tmp = x >> 4 & 0xf, str[1] = tmp > 9 ? tmp + '7' : tmp + '0';
   tmp = x >> 8 & 0xf, str[0] = tmp > 9 ? tmp + '7' : tmp + '0';
@@ -40,8 +40,8 @@ inline char *u12toax(u16 x, char str[]) {
   return str;
 }
 
-inline char *u8toax(u8 x, char str[]) {
-  u8 tmp;
+inline char *u8toax(uint8_t x, char str[]) {
+  uint8_t tmp;
   tmp = x & 0xf, str[1] = tmp > 9 ? tmp + '7' : tmp + '0';
   tmp = x >> 4 & 0xf, str[0] = tmp > 9 ? tmp + '7' : tmp + '0';
   str[2] = 0;
@@ -58,10 +58,10 @@ inline void reverse(char str[], int length) {
   }
 }
 
-inline char *u32toa(u32 x, char str[]) {
+inline char *u32toa(uint32_t x, char str[]) {
   if (!x)
     return "0";
-  u8 i = 0, rem;
+  uint8_t i = 0, rem;
 
   while (x) {
     rem = x % 10;
@@ -74,11 +74,11 @@ inline char *u32toa(u32 x, char str[]) {
   return str;
 }
 
-inline char *u32toak(u32 x, char str[]) {
+inline char *u32toak(uint32_t x, char str[]) {
   x /= 1000;
   if (!x)
     return "0k";
-  u8 i = 0, rem;
+  uint8_t i = 0, rem;
   while (x) {
     rem = x % 10;
     str[i++] = rem + '0';
@@ -91,11 +91,11 @@ inline char *u32toak(u32 x, char str[]) {
   return str;
 }
 
-inline char *u32toaM(u32 x, char str[]) {
+inline char *u32toaM(uint32_t x, char str[]) {
   x /= 1000000;
   if (!x)
     return "0M";
-  u8 i = 0, rem;
+  uint8_t i = 0, rem;
   while (x) {
     rem = x % 10;
     str[i++] = rem + '0';
@@ -108,10 +108,10 @@ inline char *u32toaM(u32 x, char str[]) {
   return str;
 }
 
-inline char *u16toa(u16 x, char str[]) {
+inline char *u16toa(uint16_t x, char str[]) {
   if (!x)
     return "0";
-  u8 i = 0, rem;
+  uint8_t i = 0, rem;
   while (x) {
     rem = x % 10;
     str[i++] = rem + '0';
@@ -123,10 +123,10 @@ inline char *u16toa(u16 x, char str[]) {
   return str;
 }
 
-inline char *u8toa(u8 x, char str[]) {
+inline char *u8toa(uint8_t x, char str[]) {
   if (!x)
     return "0";
-  u8 i = 0, rem;
+  uint8_t i = 0, rem;
   while (x) {
     rem = x % 10;
     str[i++] = rem + '0';
@@ -138,9 +138,9 @@ inline char *u8toa(u8 x, char str[]) {
   return str;
 }
 
-inline char *ttoa(u16 t, char *str) {
-  u16 frac;
-  u8 i = 0, rem, trunc = t >> 4;
+inline char *ttoa(uint16_t t, char *str) {
+  uint16_t frac;
+  uint8_t i = 0, rem, trunc = t >> 4;
   frac = (t & 0xf) * 625;
 
   while (frac) {
@@ -162,8 +162,8 @@ inline char *ttoa(u16 t, char *str) {
   return str;
 }
 
-inline u8 logu4(u8 x) {
-  u8 y = 0;
+inline uint8_t logu4(uint8_t x) {
+  uint8_t y = 0;
   if (x >> 2)
     x >>= 2, y += 2;
   if (x >> 1)
@@ -171,8 +171,8 @@ inline u8 logu4(u8 x) {
   return y;
 }
 
-inline u8 logu16(u16 x) {
-  u8 y = 0;
+inline uint8_t logu16(uint16_t x) {
+  uint8_t y = 0;
   if (x >> 8)
     x >>= 8, y += 8;
   if (x >> 4)
@@ -184,8 +184,8 @@ inline u8 logu16(u16 x) {
   return y;
 }
 
-inline u8 log16u32(u32 x) {
-  u8 y = 0;
+inline uint8_t log16u32(uint32_t x) {
+  uint8_t y = 0;
   if (x >> 16)
     x >>= 16, y += 4;
   if (x >> 8)
@@ -195,15 +195,15 @@ inline u8 log16u32(u32 x) {
   return y;
 }
 
-inline void splitu32(u32 x, u16 y[]) {
-  u8 log = (log16u32(x) + 1) >> 1 << 2;
+inline void splitu32(uint32_t x, uint16_t y[]) {
+  uint8_t log = (log16u32(x) + 1) >> 1 << 2;
   y[1] = x >> log;
   y[0] = x & ((1 << log) - 1);
 }
 
-inline u32 hex2dec(u32 x) {
-  u32 y = 0;
-  u8 n = 0;
+inline uint32_t hex2dec(uint32_t x) {
+  uint32_t y = 0;
+  uint8_t n = 0;
   while (x) {
     y |= x % 10 << n;
     x /= 10, n += 4;

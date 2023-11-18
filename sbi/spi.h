@@ -4,7 +4,7 @@
 #include "../type.h"
 
 #ifndef SPI
-static volatile u8 SCLK, MOSI, MISO, CS;
+static volatile uint8_t SCLK, MOSI, MISO, CS;
 #endif
 
 inline void spi_start(void) {
@@ -14,19 +14,19 @@ inline void spi_start(void) {
 
 inline void spi_stop(void) { CS = 1; }
 
-inline void spi_send_bit(u8 bit) {
+inline void spi_send_bit(uint8_t bit) {
   MOSI = bit;
   SCLK = 1;
   SCLK = 0;
 }
 
-inline u8 spi_recv_bit(void){
+inline uint8_t spi_recv_bit(void){
     SCLK = 1;
     SCLK = 0;
     return MISO;
 }
 
-inline void spi_send_byte(u8 byte){
+inline void spi_send_byte(uint8_t byte){
     spi_send_bit(byte & 0x80);
     spi_send_bit(byte & 0x40);
     spi_send_bit(byte & 0x20);
@@ -36,7 +36,7 @@ inline void spi_send_byte(u8 byte){
     spi_send_bit(byte & 0x02);
     spi_send_bit(byte & 0x01);
 }
-inline u8 spi_recv_byte(void) {
+inline uint8_t spi_recv_byte(void) {
     Bit8 byte;
     byte.bits.b7 = spi_recv_bit();
     byte.bits.b6 = spi_recv_bit();

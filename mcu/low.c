@@ -53,14 +53,14 @@ void init(void) {
 #endif
 
 #ifndef LOW
-static u8 EA, SM1, PCON, TMOD, TR0, TR1, TL0, TL1, TH0, TH1, EX0, EX1, IT0, IT1;
+static uint8_t EA, SM1, PCON, TMOD, TR0, TR1, TL0, TL1, TH0, TH1, EX0, EX1, IT0, IT1;
 #endif
 
-static u8 t20, t21, dt;
+static uint8_t t20, t21, dt;
 
 static Byte4 data;
 static char str[20];
-static u8 count = 0;
+static uint8_t count = 0;
 
 inline void exint0(void) {
   ++count;
@@ -74,7 +74,7 @@ inline void exint0(void) {
     data.dword <<= 1;
     ++data.dword;
   } else if (data.dword) {
-    u8 a = data.bytes[1], b = ~data.bytes[0];
+    uint8_t a = data.bytes[1], b = ~data.bytes[0];
     uart_send_u8(a == (b));
     if (data.bytes[1] == ~data.bytes[0]) {
       uart_send_u8(data.bytes[1]);
