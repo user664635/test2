@@ -22,10 +22,8 @@ void contacts_init(Contacts *contacts) {
 }
 
 void contacts_read(Contacts *contacts) {
-  Contact *data = calloc(INIT_CAP, CONTACT_SIZE);
-  size_t len = fread(data, CONTACT_SIZE, INIT_CAP, fopen("data", "r"));
-  contacts->data = data;
-  contacts->cap = INIT_CAP;
+  size_t len =
+      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen("data", "r"));
   contacts->len = len;
 }
 
@@ -61,9 +59,9 @@ void printcontacts(Contacts *contacts) {
 
 int main(void) {
   Contacts contacts;
-  contacts_read(&contacts);
-  printcontacts(&contacts);
-//   contacts_init(&contacts);
+  contacts_init(&contacts);
+//   contacts_read(&contacts);
+//   printcontacts(&contacts);
   contacts_add(&contacts, "asdf", 12354346);
   contacts_write(&contacts);
 }
