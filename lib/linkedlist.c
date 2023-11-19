@@ -8,7 +8,6 @@
 #endif
 
 typedef struct ForwardList ForwardList;
-
 struct ForwardList {
   ElementType element;
   ForwardList *next;
@@ -35,7 +34,6 @@ void flist_delete(ForwardList *node) {
 }
 
 typedef struct LinkedList LinkedList;
-
 struct LinkedList {
   ElementType element;
   LinkedList *prev, *next;
