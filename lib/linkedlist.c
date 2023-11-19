@@ -7,29 +7,29 @@
 #define ElementType void *
 #endif
 
-typedef struct SingleLinkedList SingleLinkedList;
+typedef struct ForwardList ForwardList;
 
-struct SingleLinkedList {
+struct ForwardList {
   ElementType element;
-  SingleLinkedList *next;
+  ForwardList *next;
 };
 
-SingleLinkedList *sllist_new(ElementType value) {
-  SingleLinkedList *node = malloc(sizeof(SingleLinkedList));
+ForwardList *flist_new(ElementType value) {
+  ForwardList *node = malloc(sizeof(ForwardList));
   node->element = value;
-  node->next = 0;
+  node->next = NULL;
   return node;
 }
 
-void sllist_insert(SingleLinkedList *node, ElementType value) {
-  SingleLinkedList *newnode = malloc(sizeof(SingleLinkedList));
+void flist_insert(ForwardList *node, ElementType value) {
+  ForwardList *newnode = malloc(sizeof(ForwardList));
   newnode->element = value;
   newnode->next = node->next;
   node->next = newnode;
 }
 
-void sllist_delete(SingleLinkedList *node) {
-  SingleLinkedList *delnode = node->next;
+void flist_delete(ForwardList *node) {
+  ForwardList *delnode = node->next;
   node->next = delnode->next;
   free(delnode);
 }
@@ -44,7 +44,7 @@ struct LinkedList {
 LinkedList *llist_new(ElementType value) {
   LinkedList *node = malloc(sizeof(LinkedList));
   node->element = value;
-  node->next = node->prev = 0;
+  node->next = node->prev = NULL;
   return node;
 }
 
@@ -52,17 +52,17 @@ void llist_insert(LinkedList *node, ElementType value) {
   LinkedList *newnode = malloc(sizeof(LinkedList));
   newnode->element = value;
   newnode->prev = node;
-  LinkedList *tmp = node->next;
-  newnode->next = tmp;
-  if (tmp)
-    tmp->prev = newnode;
+  newnode->next = node->next;
+  if (node->next)
+    node->next->prev = newnode;
   node->next = newnode;
 }
 
 void llist_delete(LinkedList *node) {
   LinkedList *delnode = node->next;
-  delnode->prev = node;
   node->next = delnode->next;
+  if (delnode->next)
+    delnode->next->prev = node;
   free(delnode);
 }
 
