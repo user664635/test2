@@ -6,8 +6,9 @@ int main(int argc, char **argv) {
   // init
   Contacts contacts;
   contacts_init(&contacts);
-  char *filename, str[NAMESIZE];
+  char *filename, name[NAMESIZE], op, str[128];
   int unsaved = 0;
+  uint64_t num;
   if (argc > 1) {
     filename = argv[1];
     contacts_read(&contacts, filename);
@@ -16,12 +17,31 @@ int main(int argc, char **argv) {
   // loop
   while (1) {
     puts("Command (? for help):");
-    str[0] =  'q';
-    fgets(str, NAMESIZE, stdin);
-    switch (str[0]) {
+    op = getchar();
+    switch (op) {
+      // add contact
     case 'a':
       puts("Name?");
-      fgets(str, NAMESIZE, stdin);
+      scanf("%s", name);
+      puts("Phone number?");
+      scanf("%lu", &num);
+      contacts_add(&contacts, name, num);
+      unsaved = 1;
+      break;
+      // print contacts
+    case 'p':
+      printcontacts(&contacts);
+      break;
+    // write file
+    case 'w':
+      puts("File name?");
+      str[0] = 0;
+      scanf("%s", str);
+      if (str[0]) {
+        contacts_write(&contacts, str);
+        unsaved = 0;
+      } else
+        puts("No file name,skipping writing file...");
       break;
     case '?':
       puts("a\tadd contact\n"
@@ -35,6 +55,8 @@ int main(int argc, char **argv) {
       break;
     case 'q':
       goto exit;
+    case EOF:
+      goto exit;
     }
     // while (getchar() - 10)
     //   ;
@@ -44,8 +66,6 @@ exit:
   if (unsaved)
     puts("Warning: file is not saved");
   puts("Exiting...");
-  // contacts_add(&contacts, "a", 346);
-  // contacts_add(&contacts, "adf", 15346);
   // contacts_del(&contacts, "adf");
   // printcontacts(&contacts);
   // contacts_find(&contacts, "ad");

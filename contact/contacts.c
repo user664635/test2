@@ -25,12 +25,14 @@ void contacts_init(Contacts *contacts) {
 
 void contacts_read(Contacts *contacts, char *filename) {
   size_t len =
-      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen(filename, "a+"));
+      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen(filename, "r"));
   contacts->len = len;
 }
 
 void contacts_write(Contacts *contacts, char *filename) {
-  fwrite(contacts->data, CONTACT_SIZE, contacts->len, fopen(filename, "w"));
+  FILE *file = fopen(filename, "w");
+  fwrite(contacts->data, CONTACT_SIZE, contacts->len, file);
+  fclose(file);
 }
 
 // size_t find(Contact *data, char *name, size_t index, size_t step) {
@@ -77,8 +79,8 @@ void contacts_find(Contacts *contacts, char *name) {
   size_t len = contacts->len;
   Contact *data = contacts->data;
   for (size_t i = 0; i < len; ++i) {
-    if (!strncmp(data[i].name, name,strlen(name))) {
-    printf("%s:%lu\n", data[i].name, data[i].num);
+    if (!strncmp(data[i].name, name, strlen(name))) {
+      printf("%s:%lu\n", data[i].name, data[i].num);
     }
   }
 }
