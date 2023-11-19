@@ -6,7 +6,8 @@ int main(int argc, char **argv) {
   // init
   Contacts contacts;
   contacts_init(&contacts);
-  char *filename, str[16];
+  char *filename, str[NAMESIZE];
+  int unsaved = 0;
   if (argc > 1) {
     filename = argv[1];
     contacts_read(&contacts, filename);
@@ -15,9 +16,12 @@ int main(int argc, char **argv) {
   // loop
   while (1) {
     puts("Command (? for help):");
-    switch (getchar()) {
+    str[0] =  'q';
+    fgets(str, NAMESIZE, stdin);
+    switch (str[0]) {
     case 'a':
       puts("Name?");
+      fgets(str, NAMESIZE, stdin);
       break;
     case '?':
       puts("a\tadd contact\n"
@@ -31,16 +35,14 @@ int main(int argc, char **argv) {
       break;
     case 'q':
       goto exit;
-      return 0;
-    case EOF:
-      goto exit;
-      return 0;
     }
-    while (getchar() - 10)
-      ;
+    // while (getchar() - 10)
+    //   ;
   }
 
 exit:
+  if (unsaved)
+    puts("Warning: file is not saved");
   puts("Exiting...");
   // contacts_add(&contacts, "a", 346);
   // contacts_add(&contacts, "adf", 15346);
