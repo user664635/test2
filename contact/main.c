@@ -24,30 +24,31 @@ void contacts_init(Contacts *contacts) {
   contacts->data = calloc(INIT_CAP, CONTACT_SIZE);
 }
 
-void contacts_read(Contacts *contacts) {
+void contacts_read(Contacts *contacts, char *filename) {
   size_t len =
-      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen("data", "a+"));
+      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen(filename, "a+"));
   contacts->len = len;
 }
 
-void contacts_write(Contacts *contacts) {
-  fwrite(contacts->data, CONTACT_SIZE, contacts->len, fopen("data", "w"));
+void contacts_write(Contacts *contacts, char *filename) {
+  fwrite(contacts->data, CONTACT_SIZE, contacts->len, fopen(filename, "w"));
 }
 
-size_t find(Contact *data, char *name, size_t index, size_t step) {
-  if (!step)
-    return index;
-  int cmp = strcmp(data[index].name, name);
-  if (!cmp)
-    return index;
-  if (cmp > 0)
-    return find(data, name, index + step, step >> 1);
-  return find(data, name, index - step, step >> 1);
-}
+// size_t find(Contact *data, char *name, size_t index, size_t step) {
+//   if (!step)
+//     return index;
+//   int cmp = strcmp(data[index].name, name);
+//   if (!cmp)
+//     return index;
+//   if (cmp > 0)
+//     return find(data, name, index + step, step >> 1);
+//   return find(data, name, index - step, step >> 1);
+// }
 
 // void contacts_add(Contacts *contacts, char *name, uint64_t num) {
 //   Contact contact = {.num = num}, *data = contacts->data;
 //   strcpy(contact.name, name);
+
 //   size_t len = contacts->len++, index = --len, step = len >> 1;
 //   index = find(data,name,index,step);
 //   memcpy(data + index + 1, data + index, len - index -1);
@@ -67,8 +68,18 @@ void contacts_del(Contacts *contacts, char *name) {
   for (size_t i = 0; i < len; ++i) {
     if (!strcmp(data[i].name, name)) {
       contacts->len--;
-      memcpy(data + i, data + i + 1, (len - i)*sizeof(Contacts));
+      memcpy(data + i, data + i + 1, (len - i) * CONTACT_SIZE);
       return;
+    }
+  }
+}
+
+void contacts_query(Contacts *contacts, char *name) {
+  size_t len = contacts->len;
+  Contact *data = contacts->data;
+  for (size_t i = 0; i < len; ++i) {
+    if (!strncmp(data[i].name, name,strlen(name))) {
+    printf("%s:%lu\n", data[i].name, data[i].num);
     }
   }
 }
@@ -81,13 +92,18 @@ void printcontacts(Contacts *contacts) {
 int main(int argc, char **argv) {
   Contacts contacts;
   contacts_init(&contacts);
-  contacts_read(&contacts);
+  char *filename;
+  if (argc > 1) {
+    filename = argv[1];
+    contacts_read(&contacts, filename);
+  }
   // contacts_add(&contacts, "a", 346);
   // contacts_add(&contacts, "adf", 15346);
   // contacts_add(&contacts, "sdf", 4346);
   // contacts_add(&contacts, "asf", 123546);
   // contacts_add(&contacts, "asdf", 54346);
-  contacts_del(&contacts, "adf");
-  printcontacts(&contacts);
-  contacts_write(&contacts);
+  // contacts_del(&contacts, "adf");
+  // printcontacts(&contacts);
+  contacts_query(&contacts, "ad");
+  contacts_write(&contacts, filename);
 }
