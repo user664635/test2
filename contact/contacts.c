@@ -20,12 +20,16 @@ typedef struct {
 void contacts_init(Contacts *contacts) {
   contacts->cap = INIT_CAP;
   contacts->len = 0;
-  contacts->data = calloc(INIT_CAP, CONTACT_SIZE);
+  contacts->data = malloc(INIT_CAP * CONTACT_SIZE);
+}
+
+void contacts_expand(Contacts *contacts) {
+  contacts->data = realloc(contacts->data, contacts->cap <<= 1);
 }
 
 void contacts_read(Contacts *contacts, char *filename) {
   size_t len =
-      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen(filename, "r"));
+      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen(filename, "a+"));
   contacts->len = len;
 }
 
