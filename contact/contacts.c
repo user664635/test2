@@ -33,8 +33,8 @@ void contacts_read(Contacts *contacts, char *filename) {
   FILE *file = fopen(filename, "a+");
   fseek(file, 0, SEEK_END);
   size_t len = ftell(file) / CONTACT_SIZE;
-  fseek(file, 0, SEEK_SET);
-  if (contacts->len <= len){
+  rewind(file);
+  if (contacts->len <= len) {
     contacts->cap = len;
     contacts_expand(contacts);
   }
@@ -47,28 +47,6 @@ void contacts_write(Contacts *contacts, char *filename) {
   fwrite(contacts->data, CONTACT_SIZE, contacts->len, file);
   fclose(file);
 }
-
-// size_t find(Contact *data, char *name, size_t index, size_t step) {
-//   if (!step)
-//     return index;
-//   int cmp = strcmp(data[index].name, name);
-//   if (!cmp)
-//     return index;
-//   if (cmp > 0)
-//     return find(data, name, index + step, step >> 1);
-//   return find(data, name, index - step, step >> 1);
-// }
-
-// void contacts_add(Contacts *contacts, char *name, uint64_t num) {
-//   Contact contact = {.num = num}, *data = contacts->data;
-//   strcpy(contact.name, name);
-
-//   size_t len = contacts->len++, index = --len, step = len >> 1;
-//   index = find(data,name,index,step);
-//   memcpy(data + index + 1, data + index, len - index -1);
-
-//   data[index] = contact;
-// }
 
 void contacts_add(Contacts *contacts, char *name, uint64_t num) {
   Contact contact = {.num = num};
