@@ -6,7 +6,7 @@ int main(int argc, char **argv) {
   // init
   Contacts contacts;
   contacts_init(&contacts);
-  char *filename, name[NAMESIZE], op, str[128];
+  char *filename, name[NAMESIZE], str[128];
   int unsaved = 0;
   uint64_t num;
   if (argc > 1) {
@@ -17,9 +17,11 @@ int main(int argc, char **argv) {
   // loop
   while (1) {
     puts("Command (? for help):");
-    op = getchar();
-    switch (op) {
-      // add contact
+    str[0] = 0;
+    scanf("%s", str);
+    switch (str[0]) {
+
+    // add contact
     case 'a':
       puts("Name?");
       scanf("%s", name);
@@ -28,10 +30,45 @@ int main(int argc, char **argv) {
       contacts_add(&contacts, name, num);
       unsaved = 1;
       break;
-      // print contacts
+
+    // delete contact
+    case 'd':
+      puts("Name?");
+      scanf("%s", name);
+      contacts_del(&contacts, name);
+      unsaved = 1;
+      break;
+
+    // find contact
+    case 'f':
+      puts("Name?");
+      scanf("%s", name);
+      contacts_find(&contacts, name);
+      break;
+
+    // open file
+    case 'o':
+      if (unsaved)
+        puts("Warning: file is not saved");
+      puts("File name?");
+      str[0] = 0;
+      scanf("%s", str);
+      if (str[0]) {
+        contacts_read(&contacts, str);
+        unsaved = 0;
+      } else
+        puts("No file name,skipping reading file...");
+      break;
+
+    // print contacts
     case 'p':
       printcontacts(&contacts);
       break;
+
+    // quit
+    case 'q':
+      goto exit;
+
     // write file
     case 'w':
       puts("File name?");
@@ -43,6 +80,7 @@ int main(int argc, char **argv) {
       } else
         puts("No file name,skipping writing file...");
       break;
+
     case '?':
       puts("a\tadd contact\n"
            "d\tdelete a contact by name\n"
@@ -53,21 +91,13 @@ int main(int argc, char **argv) {
            "w\twrite to a file\n"
            "?\tprint this page\n");
       break;
-    case 'q':
-      goto exit;
-    case EOF:
+    case 0:
       goto exit;
     }
-    // while (getchar() - 10)
-    //   ;
   }
 
 exit:
   if (unsaved)
     puts("Warning: file is not saved");
   puts("Exiting...");
-  // contacts_del(&contacts, "adf");
-  // printcontacts(&contacts);
-  // contacts_find(&contacts, "ad");
-  // contacts_write(&contacts, filename);
 }
