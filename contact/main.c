@@ -93,6 +93,16 @@ int main(int argc, char **argv) {
       break;
     case 0:
       goto exit;
+
+    // debug operation
+    case 'l':
+      printf("%lu\n", contacts.len);
+      scanf("%lu", &num);
+      contacts.len = num;
+      break;
+
+    case 'c':
+    printf("%lu\n",contacts.cap);
     }
   }
 

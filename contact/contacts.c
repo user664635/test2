@@ -1,10 +1,11 @@
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define NAMESIZE 16
+#define NAMESIZE 24
 typedef struct {
   uint64_t num;
   char name[NAMESIZE];
@@ -24,12 +25,16 @@ void contacts_init(Contacts *contacts) {
 }
 
 void contacts_expand(Contacts *contacts) {
-  contacts->data = realloc(contacts->data, contacts->cap <<= 1);
+  size_t cap = contacts->cap <<= 1;
+  contacts->data = realloc(contacts->data, cap * CONTACT_SIZE);
 }
 
 void contacts_read(Contacts *contacts, char *filename) {
-  size_t len =
-      fread(contacts->data, CONTACT_SIZE, INIT_CAP, fopen(filename, "a+"));
+  FILE *file = fopen(filename, "a+");
+  fseek(file, 0, SEEK_END);
+  size_t len = ftell(file) / CONTACT_SIZE;
+  fseek(file, 0, SEEK_SET);
+  fread(contacts->data, CONTACT_SIZE, len, file);
   contacts->len = len;
 }
 
@@ -65,6 +70,8 @@ void contacts_add(Contacts *contacts, char *name, uint64_t num) {
   Contact contact = {.num = num};
   strcpy(contact.name, name);
   contacts->data[contacts->len++] = contact;
+  if (contacts->len == contacts->cap)
+    contacts_expand(contacts);
 }
 
 void contacts_del(Contacts *contacts, char *name) {
