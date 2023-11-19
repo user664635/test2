@@ -34,6 +34,10 @@ void contacts_read(Contacts *contacts, char *filename) {
   fseek(file, 0, SEEK_END);
   size_t len = ftell(file) / CONTACT_SIZE;
   fseek(file, 0, SEEK_SET);
+  if (contacts->len <= len){
+    contacts->cap = len;
+    contacts_expand(contacts);
+  }
   fread(contacts->data, CONTACT_SIZE, len, file);
   contacts->len = len;
 }

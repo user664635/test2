@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
       break;
 
     case 'c':
-    printf("%lu\n",contacts.cap);
+      printf("%lu\n", contacts.cap);
     }
   }
 
