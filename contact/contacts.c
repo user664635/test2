@@ -73,7 +73,7 @@ void contacts_del(Contacts *contacts, char *name) {
   }
 }
 
-void contacts_query(Contacts *contacts, char *name) {
+void contacts_find(Contacts *contacts, char *name) {
   size_t len = contacts->len;
   Contact *data = contacts->data;
   for (size_t i = 0; i < len; ++i) {
