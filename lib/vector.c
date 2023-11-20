@@ -30,22 +30,44 @@ void vector_realloc(Vector *vector, size_t cap) {
   vector->data = realloc(vector->data, cap * sizeof(ElementType));
 }
 
-void vector_push(Vector *vector, ElementType element) {
+void vector_push_unsafe(Vector *vector, ElementType element) {
   vector->data[vector->len++] = element;
 }
 
-ElementType vector_pop(Vector *vector) { return vector->data[--vector->len]; }
+ElementType vector_pop_unsafe(Vector *vector) {
+  return vector->data[--vector->len];
+}
 
-void vector_insert(Vector *vector, size_t index, ElementType element) {
+void vector_insert_unsafe(Vector *vector, size_t index, ElementType element) {
   memmove(vector->data + index + 1, vector->data + index,
           (vector->len++ - index) * sizeof(ElementType));
   vector->data[index] = element;
 }
 
-void vector_delete(Vector *vector, size_t index) {
+void vector_delete_unsafe(Vector *vector, size_t index) {
   memcpy(vector->data + index, vector->data + index + 1,
          (vector->len-- - index) * sizeof(ElementType));
 }
+
+void vector_read(Vector *vector, char *filename) {
+  FILE *file = fopen(filename, "a+");
+  fseek(file, 0, SEEK_END);
+  size_t len = ftell(file) / sizeof(ElementType);
+  rewind(file);
+  if (vector->len <= len) {
+    vector_realloc(vector, len << 1);
+  }
+  fread(vector->data, sizeof(ElementType), len, file);
+  vector->len = len;
+}
+
+void vector_write(Vector *vector, char *filename) {
+  FILE *file = fopen(filename, "w");
+  fwrite(vector->data, sizeof(ElementType), vector->len, file);
+  fclose(file);
+}
+
+// void vector_find(Vector *vector,)
 
 // debug
 void print_vector(Vector *vector, void print_element(ElementType)) {
