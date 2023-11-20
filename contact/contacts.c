@@ -16,12 +16,6 @@ typedef struct {
 #define INIT_CAP 128
 void contacts_init(Vector *contacts) { vector_init(contacts, INIT_CAP); }
 
-// void contacts_expand(Vector *contacts) {
-//   vector_real
-//   size_t cap = contacts->cap <<= 1;
-//   contacts->data = realloc(contacts->data, cap * CONTACT_SIZE);
-// }
-
 void contacts_read(Vector *contacts, char *filename) {
   vector_read(contacts, filename);
 }
@@ -37,15 +31,14 @@ void contacts_add(Vector *contacts, char *name, uint64_t num) {
 }
 
 void contacts_del(Vector *contacts, char *name) {
-  // size_t len = contacts->len;
-  // Contact *data = contacts->data;
-  // for (size_t i = 0; i < len; ++i) {
-  //   if (!strcmp(data[i].name, name)) {
-  //     contacts->len--;
-  //     memcpy(data + i, data + i + 1, (len - i) * CONTACT_SIZE);
-  //     return;
-  //   }
-  // }
+  size_t len = contacts->len;
+  Contact *data = contacts->data;
+  for (size_t i = 0; i < len; ++i) {
+    if (!strcmp(data[i].name, name)) {
+      vector_delete_unsafe(contacts, i);
+      return;
+    }
+  }
 }
 
 void contacts_find(Vector *contacts, char *name) {

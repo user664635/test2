@@ -1,6 +1,7 @@
 #ifndef VECTOR_C
 #define VECTOR_C
 
+#include <errno.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,11 +46,11 @@ static inline ElementType vector_pop_unsafe(Vector *vector) {
   return vector->data[--vector->len];
 }
 
-// static inline ElementType vector_pop(Vector *vector) {
-//   if (!vector->len)
-//     return NULL;
-//   return vector_pop_unsafe(vector);
-// }
+static inline ElementType vector_pop(Vector *vector) {
+  if (!vector->len)
+    errno;
+  return vector_pop_unsafe(vector);
+}
 
 static inline void vector_insert_unsafe(Vector *vector, size_t index,
                                         ElementType element) {
@@ -96,7 +97,7 @@ static inline void vector_write(Vector *vector, char *filename) {
   fclose(file);
 }
 
-// static inline void vector_find(Vector *vector,)
+// static inline void vector_find(Vector *vector,int)
 
 // debug
 static inline void print_vector(Vector *vector,
