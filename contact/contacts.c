@@ -10,41 +10,24 @@ typedef struct {
   char name[NAMESIZE];
 } Contact;
 
-#define CONTACT_SIZE sizeof(Contact)
-typedef struct {
-  Contact *data;
-  size_t len, cap;
-} Contacts;
+#define ElementType Contact
+#include "../lib/vector.c"
 
 #define INIT_CAP 128
-void contacts_init(Contacts *contacts) {
-  contacts->cap = INIT_CAP;
-  contacts->len = 0;
-  contacts->data = malloc(INIT_CAP * CONTACT_SIZE);
+void contacts_init(Vector *contacts) { vector_init(contacts, INIT_CAP); }
+
+// void contacts_expand(Vector *contacts) {
+//   vector_real
+//   size_t cap = contacts->cap <<= 1;
+//   contacts->data = realloc(contacts->data, cap * CONTACT_SIZE);
+// }
+
+void contacts_read(Vector *contacts, char *filename) {
+  vector_read(contacts, filename);
 }
 
-void contacts_expand(Contacts *contacts) {
-  size_t cap = contacts->cap <<= 1;
-  contacts->data = realloc(contacts->data, cap * CONTACT_SIZE);
-}
-
-void contacts_read(Contacts *contacts, char *filename) {
-  FILE *file = fopen(filename, "a+");
-  fseek(file, 0, SEEK_END);
-  size_t len = ftell(file) / CONTACT_SIZE;
-  rewind(file);
-  if (contacts->len <= len) {
-    contacts->cap = len;
-    contacts_expand(contacts);
-  }
-  fread(contacts->data, CONTACT_SIZE, len, file);
-  contacts->len = len;
-}
-
-void contacts_write(Contacts *contacts, char *filename) {
-  FILE *file = fopen(filename, "w");
-  fwrite(contacts->data, CONTACT_SIZE, contacts->len, file);
-  fclose(file);
+void contacts_write(Vector *contacts, char *filename) {
+  vector_write(contacts,filename);
 }
 
 void contacts_add(Contacts *contacts, char *name, uint64_t num) {
