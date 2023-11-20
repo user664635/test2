@@ -4,7 +4,7 @@
 int main(int argc, char **argv) {
   puts("This is a contacts app");
   // init
-  Contacts contacts;
+  Vector contacts;
   contacts_init(&contacts);
   char *filename, name[NAMESIZE], str[128];
   int unsaved = 0;

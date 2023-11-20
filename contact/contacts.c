@@ -27,40 +27,38 @@ void contacts_read(Vector *contacts, char *filename) {
 }
 
 void contacts_write(Vector *contacts, char *filename) {
-  vector_write(contacts,filename);
+  vector_write(contacts, filename);
 }
 
-void contacts_add(Contacts *contacts, char *name, uint64_t num) {
-  Contact contact = {.num = num};
-  strcpy(contact.name, name);
-  contacts->data[contacts->len++] = contact;
-  if (contacts->len == contacts->cap)
-    contacts_expand(contacts);
+void contacts_add(Vector *contacts, char *name, uint64_t num) {
+  Contact tmp = {.num = num};
+  strcpy(tmp.name, name);
+  vector_push(contacts, tmp);
 }
 
-void contacts_del(Contacts *contacts, char *name) {
-  size_t len = contacts->len;
-  Contact *data = contacts->data;
-  for (size_t i = 0; i < len; ++i) {
-    if (!strcmp(data[i].name, name)) {
-      contacts->len--;
-      memcpy(data + i, data + i + 1, (len - i) * CONTACT_SIZE);
-      return;
-    }
-  }
+void contacts_del(Vector *contacts, char *name) {
+  // size_t len = contacts->len;
+  // Contact *data = contacts->data;
+  // for (size_t i = 0; i < len; ++i) {
+  //   if (!strcmp(data[i].name, name)) {
+  //     contacts->len--;
+  //     memcpy(data + i, data + i + 1, (len - i) * CONTACT_SIZE);
+  //     return;
+  //   }
+  // }
 }
 
-void contacts_find(Contacts *contacts, char *name) {
-  size_t len = contacts->len;
-  Contact *data = contacts->data;
-  for (size_t i = 0; i < len; ++i) {
-    if (!strncmp(data[i].name, name, strlen(name))) {
-      printf("%s:%lu\n", data[i].name, data[i].num);
-    }
-  }
+void contacts_find(Vector *contacts, char *name) {
+  // size_t len = contacts->len;
+  // Contact *data = contacts->data;
+  // for (size_t i = 0; i < len; ++i) {
+  //   if (!strncmp(data[i].name, name, strlen(name))) {
+  //     printf("%s:%lu\n", data[i].name, data[i].num);
+  //   }
+  // }
 }
 
-void printcontacts(Contacts *contacts) {
+void printcontacts(Vector *contacts) {
   for (int i = 0; i < contacts->len; ++i)
     printf("%s:%lu\n", contacts->data[i].name, contacts->data[i].num);
 }
