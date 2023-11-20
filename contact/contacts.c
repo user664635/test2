@@ -41,17 +41,18 @@ void contacts_del(Vector *contacts, char *name) {
   }
 }
 
-void contacts_find(Vector *contacts, char *name) {
-  // size_t len = contacts->len;
-  // Contact *data = contacts->data;
-  // for (size_t i = 0; i < len; ++i) {
-  //   if (!strncmp(data[i].name, name, strlen(name))) {
-  //     printf("%s:%lu\n", data[i].name, data[i].num);
-  //   }
-  // }
+void printcontact(Contact contact) {
+  printf("%s:%lu\n", contact.name, contact.num);
 }
 
-void printcontacts(Vector *contacts) {
-  for (int i = 0; i < contacts->len; ++i)
-    printf("%s:%lu\n", contacts->data[i].name, contacts->data[i].num);
+void contacts_find(Vector *contacts, char *name) {
+  size_t len = contacts->len;
+  Contact *data = contacts->data;
+  for (size_t i = 0; i < len; ++i) {
+    if (!strncmp(data[i].name, name, strlen(name))) {
+      printcontact(data[i]);
+    }
+  }
 }
+
+void printcontacts(Vector *contacts) { print_vector(contacts, printcontact); }
