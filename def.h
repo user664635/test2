@@ -18,6 +18,11 @@ typedef uint_fast16_t fu16;
 typedef uint_fast32_t fu32;
 typedef uint_fast64_t fu64;
 
+typedef uint_least8_t lu8;
+typedef uint_least16_t lu16;
+typedef uint_least32_t lu32;
+typedef uint_least64_t lu64;
+
 typedef int8_t i8;
 typedef int16_t i16;
 typedef int32_t i32;
@@ -29,6 +34,11 @@ typedef int_fast8_t fi8;
 typedef int_fast16_t fi16;
 typedef int_fast32_t fi32;
 typedef int_fast64_t fi64;
+
+typedef int_least8_t li8;
+typedef int_least16_t li16;
+typedef int_least32_t li32;
+typedef int_least64_t li64;
 
 typedef _Float16 f16;
 typedef _Float32 f32;
