@@ -7,12 +7,16 @@
 #include <tgmath.h>
 
 typedef uint8_t u8;
-
 typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 typedef unsigned __int128 u128;
 typedef size_t usize;
+
+typedef uint_fast8_t fu8;
+typedef uint_fast16_t fu16;
+typedef uint_fast32_t fu32;
+typedef uint_fast64_t fu64;
 
 typedef int8_t i8;
 typedef int16_t i16;
@@ -20,6 +24,11 @@ typedef int32_t i32;
 typedef int64_t i64;
 typedef __int128 i128;
 typedef ssize_t isize;
+
+typedef int_fast8_t fi8;
+typedef int_fast16_t fi16;
+typedef int_fast32_t fi32;
+typedef int_fast64_t fi64;
 
 typedef _Float16 f16;
 typedef _Float32 f32;
@@ -61,7 +70,21 @@ static inline void printi16(i16 x) { printint(5); }
 static inline void printu8(u8 x) { printuint(3); }
 static inline void printi8(i8 x) { printint(3); }
 
-#undef printuint
-#undef printint
+// #undef printuint
+// #undef printint
+
+static inline void printf32(float x) {
+
+  if (x < 10) {
+    putchar('0' + x);
+    return;
+  }
+  char str[100];
+  uint_fast8_t i = 0;
+  for (; x; x /= 10)
+    str[i++] = x - x / 10 + '0';
+  while (i)
+    putchar(str[--i]);
+}
 
 #endif
