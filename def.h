@@ -43,6 +43,16 @@ typedef _Float64 f64x2 __attribute__((vector_size(16)));
   while (i)                                                                    \
   putchar(str[--i])
 
+#define printint(digit)                                                        \
+  if (x < 0) {                                                                 \
+    x = -x;                                                                    \
+    putchar('-');                                                              \
+  }                                                                            \
+  printuint(digit);
+
 static inline void printu32(u32 x) { printuint(10); }
+static inline void printi32(i32 x) { printint(10); }
+
+#undef printuint
 
 #endif
