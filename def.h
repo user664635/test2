@@ -50,9 +50,18 @@ typedef _Float64 f64x2 __attribute__((vector_size(16)));
   }                                                                            \
   printuint(digit);
 
+static inline void printu128(u128 x) { printuint(39); }
+static inline void printi128(i128 x) { printint(39); }
+static inline void printu64(u64 x) { printuint(20); }
+static inline void printi64(i64 x) { printint(20); }
 static inline void printu32(u32 x) { printuint(10); }
 static inline void printi32(i32 x) { printint(10); }
+static inline void printu16(u16 x) { printuint(5); }
+static inline void printi16(i16 x) { printint(5); }
+static inline void printu8(u8 x) { printuint(3); }
+static inline void printi8(i8 x) { printint(3); }
 
 #undef printuint
+#undef printint
 
 #endif
