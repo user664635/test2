@@ -5,9 +5,11 @@
 #include <stdio.h>
 #include <tgmath.h>
 
-#define PHI 1.61803398874989484820458683436563812
-#define PHI1 -0.61803398874989484820458683436563812
-#define PI 3.14159265358979323846264338327950288
+#define SQRT5 2.23606797749978969640917366873127624q
+#define SQRT1_5 0.44721359549995793928183473374625525q
+#define PHI 1.61803398874989484820458683436563812q
+#define PHI1 -0.61803398874989484820458683436563812q
+#define PI 3.14159265358979323846264338327950288q
 
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -87,27 +89,76 @@ static inline void printi16(fi16 x) { printint(5); }
 static inline void printu8(fu8 x) { printuint(3); }
 static inline void printi8(fi8 x) { printint(3); }
 
+static inline void printu128n(u128 x) {
+  printu128(x);
+  putchar('\n');
+}
+static inline void printi128n(i128 x) {
+  printi128(x);
+  putchar('\n');
+}
+static inline void printu64n(fu64 x) {
+  printu64(x);
+  putchar('\n');
+}
+static inline void printi64n(fi64 x) {
+  printi64(x);
+  putchar('\n');
+}
+static inline void printu32n(fu32 x) {
+  printu32(x);
+  putchar('\n');
+}
+static inline void printi32n(fi32 x) {
+  printi32(x);
+  putchar('\n');
+}
+static inline void printu16n(fu16 x) {
+  printu16(x);
+  putchar('\n');
+}
+static inline void printi16n(fi16 x) {
+  printi16(x);
+  putchar('\n');
+}
+static inline void printu8n(fu8 x) {
+  printu8(x);
+  putchar('\n');
+}
+static inline void printi8n(fi8 x) {
+  printi8(x);
+  putchar('\n');
+}
+
+#define printfrac()                                                            \
+  putchar('.');                                                                \
+  fu8 trunc;                                                                   \
+  while (x) {                                                                  \
+    x *= 10;                                                                   \
+    trunc = x;                                                                 \
+    x -= trunc;                                                                \
+    putdigit(trunc);                                                           \
+  }
+
 #define F16MAX 65504
 static inline void printf16(f16 x) {
   printsign();
   if (x <= F16MAX) {
-    fi16 trunc = x;
-    printu16(trunc);
-    putchar('.');
-    while (x) {
-      x -= trunc;
-      x *= 10;
-      trunc = x;
-      putdigit(trunc);
-    }
+    fu16 tmp = x;
+    printu16(tmp);
+    x -= tmp;
+    printfrac();
   } else if (x > F16MAX)
     print("inf");
   else
     print("nan");
+}
+static inline void printf16n(f16 x) {
+  printf16(x);
   putchar('\n');
 }
 
-static inline void printf32(float x) {
+static inline void printf32(f32 x) {
 
   if (x < 10) {
     putchar('0' + x);
@@ -119,6 +170,15 @@ static inline void printf32(float x) {
     str[i++] = x - x / 10 + '0';
   while (i)
     putchar(str[--i]);
+}
+
+static inline void printf128(f128 x) {
+  printsign();
+  u128 y = *(u128 *)&x;
+  print("(1+");
+  printu128(y << 16 >> 16);
+  print("/2^112)*2^");
+  printi16((y >> 112) - 16383);
 }
 
 #endif
