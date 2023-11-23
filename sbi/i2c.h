@@ -1,10 +1,10 @@
 #ifndef I2C_H
 #define I2C_H
 
-#include "../type.h"
+#include "../lib/def.h"
 
 #ifndef I2C
-static volatile uint8_t SCL, SDA;
+static volatile u8 SCL, SDA;
 #endif
 
 inline void i2c_start(void) {
@@ -20,7 +20,7 @@ inline void i2c_stop(void) {
   SDA = 1;
 }
 
-inline void i2c_send_bit(uint8_t bit) {
+inline void i2c_send_bit(u8 bit) {
   SDA = bit;
   SCL = 1;
   SCL = 0;
@@ -32,15 +32,15 @@ inline void i2c_send_ack(void) {
   SCL = 0;
 }
 
-inline uint8_t i2c_recv_bit(void) {
+inline u8 i2c_recv_bit(void) {
   SCL = 1;
-  uint8_t bit = SDA;
+  u8 bit = SDA;
   SCL = 0;
   return bit;
 }
 
-inline uint8_t i2c_recv_ack(void) {
-  uint8_t bit = 1;
+inline u8 i2c_recv_ack(void) {
+  u8 bit = 1;
   SDA = 1;
   SCL = 1;
   bit = SDA;
@@ -48,7 +48,7 @@ inline uint8_t i2c_recv_ack(void) {
   return bit;
 }
 
-inline uint8_t i2c_send_byte(uint8_t byte) {
+inline u8 i2c_send_byte(u8 byte) {
   i2c_send_bit(byte & 0x80);
   i2c_send_bit(byte & 0x40);
   i2c_send_bit(byte & 0x20);
@@ -60,18 +60,18 @@ inline uint8_t i2c_send_byte(uint8_t byte) {
   return i2c_recv_ack();
 }
 
-inline uint8_t i2c_recv_byte(void) {
-  Bit8 byte;
-  byte.bits.b7 = i2c_recv_bit();
-  byte.bits.b6 = i2c_recv_bit();
-  byte.bits.b5 = i2c_recv_bit();
-  byte.bits.b4 = i2c_recv_bit();
-  byte.bits.b3 = i2c_recv_bit();
-  byte.bits.b2 = i2c_recv_bit();
-  byte.bits.b1 = i2c_recv_bit();
-  byte.bits.b0 = i2c_recv_bit();
+inline u8 i2c_recv_byte(void) {
+  bit8 byte;
+  byte.b7 = i2c_recv_bit();
+  byte.b6 = i2c_recv_bit();
+  byte.b5 = i2c_recv_bit();
+  byte.b4 = i2c_recv_bit();
+  byte.b3 = i2c_recv_bit();
+  byte.b2 = i2c_recv_bit();
+  byte.b1 = i2c_recv_bit();
+  byte.b0 = i2c_recv_bit();
   i2c_send_ack();
-  return byte.byte;
+  return *(u16*)&byte;
 }
 
 #endif
