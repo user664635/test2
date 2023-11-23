@@ -54,6 +54,10 @@ typedef __float128 f128;
 
 typedef _Float64 f64x2 __attribute__((vector_size(16)));
 
+typedef struct {
+  u16 frac : 10, exp : 5, sign : 1;
+} f16part;
+
 #define print(str) fputs(str, stdout)
 #define putdigit(x) putchar(x + '0')
 #define printuint(digit)                                                       \
@@ -68,11 +72,15 @@ typedef _Float64 f64x2 __attribute__((vector_size(16)));
   while (i)                                                                    \
   putdigit(str[--i])
 
-#define printsign()                                                            \
-  if (x < 0) {                                                                 \
+#define printneg()                                                             \
+  {                                                                            \
     x = -x;                                                                    \
     putchar('-');                                                              \
   }
+
+#define printsign()                                                            \
+  if (x < 0)                                                                   \
+    printneg();
 
 #define printint(digit)                                                        \
   printsign();                                                                 \
@@ -131,27 +139,38 @@ static inline void printi8n(fi8 x) {
 }
 
 #define printfrac()                                                            \
-  putchar('.');                                                                \
-  fu8 trunc;                                                                   \
-  while (x) {                                                                  \
-    x *= 10;                                                                   \
-    trunc = x;                                                                 \
-    x -= trunc;                                                                \
-    putdigit(trunc);                                                           \
+  {                                                                            \
+    putchar('.');                                                              \
+    fu8 trunc;                                                                 \
+    while (x) {                                                                \
+      x *= 10;                                                                 \
+      trunc = x;                                                               \
+      x -= trunc;                                                              \
+      putdigit(trunc);                                                         \
+    }                                                                          \
   }
 
-#define F16MAX 65504
+#define FIX_MIN 0.001
+
 static inline void printf16(f16 x) {
-  printsign();
-  if (x <= F16MAX) {
+  f16part y = *(f16part *)&x;
+  if (y.sign)
+    printneg();
+  if (y.exp != 31) {
     fu16 tmp = x;
     printu16(tmp);
     x -= tmp;
-    printfrac();
-  } else if (x > F16MAX)
-    print("inf");
-  else
+    if (x)
+      printfrac();
+    return;
+  }
+  if (y.frac) {
     print("nan");
+    printu16(y.frac);
+    return;
+  }
+  print("inf");
+  return;
 }
 static inline void printf16n(f16 x) {
   printf16(x);
