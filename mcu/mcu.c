@@ -1,9 +1,16 @@
-// #include <8052.h>
+#include <8052.h>
 #define LOW
-#include "low.c"
+// #include "low.c"
+
+void idle(void){}
+#define print idle
+#define printn idle
+#define printc idle
+
+#include "../lib/print.h"
 
 int main(void) {
-  init();
+  // init();
   // uint8_t t0, t1;
   // uint16_t x = 0;
   uint32_t c = 0;
@@ -39,6 +46,6 @@ int main(void) {
     // uart_send_u16n(x);
 
   // uart_send_bit(1);
-  uart_send_d32n(++c);
+  // uart_send_d32n(++c);
   }
 }
