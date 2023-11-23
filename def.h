@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include <tgmath.h>
 
 #define SQRT5 2.23606797749978969640917366873127624q
@@ -46,17 +47,6 @@ typedef int_least64_t li64;
 #ifndef SDCC
 typedef unsigned __int128 u128;
 typedef __int128 i128;
-typedef _Float16 f16;
-typedef _Float32 f32;
-typedef _Float64 f64;
-typedef _Float64x f80;
-typedef __float128 f128;
-
-typedef _Float64 f64x2 __attribute__((vector_size(16)));
-
-typedef struct {
-  u16 frac : 10, exp : 5, sign : 1;
-} f16part;
 
 #define print(str) fputs(str, stdout)
 #define putdigit(x) putchar(x + '0')
@@ -138,6 +128,18 @@ static inline void printi8n(fi8 x) {
   putchar('\n');
 }
 
+typedef _Float16 f16;
+typedef _Float32 f32;
+typedef _Float64 f64;
+typedef _Float64x f80;
+typedef __float128 f128;
+
+typedef struct {
+  u16 frac : 10, exp : 5, sign : 1;
+} f16part;
+
+typedef _Float64 f64x2 __attribute__((vector_size(16)));
+
 #define printfrac()                                                            \
   {                                                                            \
     putchar('.');                                                              \
@@ -160,8 +162,28 @@ static inline void printf16(f16 x) {
     fu16 tmp = x;
     printu16(tmp);
     x -= tmp;
-    if (x)
-      printfrac();
+    if (x) {
+      putchar('.');
+      fu32 frac = x * 1e10 + 0.5;
+      char buf[11];
+      memset(buf, '0', 10);
+      fu8 i = 10,rem;
+      while (1) {
+        rem = frac % 10;
+        frac /= 10;
+        if (rem)
+          break;
+        --i;
+      }
+      buf[i] = 0;
+      buf[--i] += rem ;
+      while (frac) {
+        buf[--i] += frac % 10;
+        frac /= 10;
+      }
+      print(buf);
+    }
+    // printfrac();
     return;
   }
   if (y.frac) {
