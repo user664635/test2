@@ -106,4 +106,39 @@ static inline fu8 lgu128(u128 x) {
   return y + (x / 10 > 0);
 }
 
+static inline fi8 logf16(f16 x) {
+  f16part y = *(f16part *)&x;
+  if (y.exp)
+    return y.exp - 15;
+  return logu16(y.frac) - 24;
+}
+
+static inline fi16 logf32(f32 x) {
+  f32part y = *(f32part *)&x;
+  if (y.exp)
+    return y.exp - 127;
+  return logu32(y.frac) - 149;
+}
+
+static inline fi16 logf64(f64 x) {
+  f64part y = *(f64part *)&x;
+  if (y.exp)
+    return y.exp - 1023;
+  return logu64(y.frac) - 1075;
+}
+
+static inline fi16 logf80(f80 x) {
+  f80part y = *(f80part *)&x;
+  if (y.exp)
+    return y.exp - 16383;
+  return logu64(y.frac) - 16445;
+}
+
+static inline fi16 logf128(f128 x) {
+  f128part y = *(f128part *)&x;
+  if (y.exp)
+    return y.exp - 16383;
+  return logu128(y.frac) - 16494;
+}
+
 #endif
