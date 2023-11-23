@@ -51,6 +51,20 @@ typedef struct {
   uint8_t h0 : 4, h1 : 4, h2 : 4, h3 : 4;
 } hex4;
 
+typedef struct {
+  u16 frac : 10, exp : 5, sign : 1;
+} f16part;
+typedef struct {
+  u32 frac : 23, exp : 8, sign : 1;
+} f32part;
+typedef struct {
+  u64 frac : 52, exp : 11, sign : 1;
+} f64part;
+typedef struct {
+  u64 frac;
+  u16 exp : 15, sign : 1;
+} f80part;
+
 #ifdef SDCC
 #define f32 float
 #else
@@ -62,10 +76,9 @@ typedef _Float32 f32;
 typedef _Float64 f64;
 typedef _Float64x f80;
 typedef __float128 f128;
-
 typedef struct {
-  u16 frac : 10, exp : 5, sign : 1;
-} f16part;
+  u128 frac : 112, exp : 15, sign : 1;
+} f128part;
 
 typedef _Float64 f64x2 __attribute__((vector_size(16)));
 #endif
