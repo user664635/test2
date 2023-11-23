@@ -71,7 +71,7 @@ inline u8 i2c_recv_byte(void) {
   byte.b1 = i2c_recv_bit();
   byte.b0 = i2c_recv_bit();
   i2c_send_ack();
-  return *(u16*)&byte;
+  return *(u8*)&byte;
 }
 
 #endif
