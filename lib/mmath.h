@@ -4,6 +4,8 @@
 #include "def.h"
 #include <stdio.h>
 
+#define LG2 0.30102999566398119521373889472449303
+
 // devide x by 2^n and plus y
 #define dx2py(n)                                                               \
   tmp = x >> n;                                                                \
@@ -193,29 +195,35 @@ static inline fi16 logf80(f80 x) {
   return logu64(y.frac) - 16445;
 }
 static inline fi16 lgf80(f80 x) {
-  fu16 y = 0;
-  fu8 sign = 1;
-  f80 tmp;
-  if (x > 1)
-    x = 1 / x, sign = 0;
-  mx10py(4096);
-  mx10py(2048);
-  mx10py(1024);
-  mx10py(512);
-  mx10py(256);
-  mx10py(128);
-  mx10py(64);
-  mx10py(32);
-  mx10py(16);
-  mx10py(8);
-  mx10py(4);
-  mx10py(2);
-  mx10py(1);
-  if (sign)
-    y = -y;
-  else
+  fi32 y = logf80(x);
+
+  if (y < 0)
     --y;
+  y *= 30103, y /= 100000;
   return y;
+  // fu16 y = 0;
+  // fu8 sign = 1;
+  // f80 tmp;
+  // if (x > 1)
+  //   x = 1 / x, sign = 0;
+  // mx10py(4096);
+  // mx10py(2048);
+  // mx10py(1024);
+  // mx10py(512);
+  // mx10py(256);
+  // mx10py(128);
+  // mx10py(64);
+  // mx10py(32);
+  // mx10py(16);
+  // mx10py(8);
+  // mx10py(4);
+  // mx10py(2);
+  // mx10py(1);
+  // if (sign)
+  //   y = -y;
+  // else
+  //   --y;
+  // return y;
 }
 
 static inline fi16 logf128(f128 x) {
