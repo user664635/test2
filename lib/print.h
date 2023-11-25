@@ -3,6 +3,17 @@
 
 #include "def.h"
 
+#ifndef print
+#define print
+#include <stdio.h>
+#define prints(str) fputs(str, stdout)
+#define printc(x) putchar(x)
+#define printn() putchar('\n')
+#endif
+
+static inline void printsn(char *str);
+static inline void printdigit(char x);
+
 static inline void printu8(u8 x);
 static inline void printi8(i8 x);
 static inline void printu8n(u8 x);

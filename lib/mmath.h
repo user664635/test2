@@ -16,11 +16,20 @@ static inline u8 lgu64(u64 x) __attribute__((const));
 static inline u8 logu128(u128 x) __attribute__((const));
 static inline u8 lgu128(u128 x) __attribute__((const));
 
+#define isnan(x) __builtin_isnan(x)
+#define isinf(x) __builtin_isinf(x)
+
 #define popcnt16(x) __builtin_popcount(x)
 #define popcnt32(x) __builtin_popcountl(x)
 #define popcnt64(x) __builtin_popcountll(x)
 
-static inline u8 logu8(u8 x) __attribute__((const));
+#define lgf32(x) __builtin_log10f(x)
+#define flr32(x) __builtin_floorf(x)
+
+#define e10f32(x) __builtin_powf(10,x)
+
+static inline i16 logf128(f128 x) __attribute__((const));
+static inline i16 lgf128(f128 x) __attribute__((const));
 
 #include "impl/mmath.c"
 

@@ -108,6 +108,12 @@ u8 lgu128(u128 x) {
   return y + (x / 10 > 0);
 }
 
+// f16d decf16(f16 x){
+//   if (x >= 10){
+
+//   }
+// }
+
 i16 logf128(f128 x) {
   f128part y = *(f128part *)&x;
   if (y.exp)
@@ -137,5 +143,24 @@ i16 lgf128(f128 x) {
     y = -y;
   else
     --y;
+  return y;
+}
+
+#define pu8()                                                                  \
+  y *= y;                                                                      \
+  if (n & 0x80)                                                                \
+    y *= x;                                                                    \
+  n <<= 1
+
+u128 powu64(u64 x, u8 n) {
+  u128 y = 1;
+  pu8();
+  pu8();
+  pu8();
+  pu8();
+  pu8();
+  pu8();
+  pu8();
+  pu8();
   return y;
 }

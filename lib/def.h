@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <tgmath.h>
 
 // #define SQRT5 2.23606797749978969640917366873127624q
 // #define SQRT1_5 0.44721359549995793928183473374625525q
@@ -36,6 +35,11 @@ typedef struct {
 typedef float f32;
 typedef double f64;
 typedef long double f80;
+
+typedef struct {
+  u16 frac;
+  u8 exp;
+} f16d;
 
 #ifndef SDCC
 typedef __int128 i128;

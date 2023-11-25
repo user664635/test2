@@ -1,15 +1,16 @@
-#include "../def.h"
+#include "../mmath.h"
 
 #ifndef print
+#define print
 #include <stdio.h>
 #define prints(str) fputs(str, stdout)
 #define printc(x) putchar(x)
 #define printn() putchar('\n')
 #endif
 
-#define printsn(str) prints(str), printn()
+void printsn(char *str) { prints(str), printn(); }
+void printdigit(char x) { printc(x + '0'); }
 
-#define putdigit(x) printc(x + '0')
 #define printuint(digit)                                                       \
   if (x < 10) {                                                                \
     printc('0' + x);                                                           \
@@ -20,7 +21,7 @@
   for (; x; x /= 10)                                                           \
     str[i++] = x % 10;                                                         \
   while (i)                                                                    \
-  putdigit(str[--i])
+  printdigit(str[--i])
 
 #define printneg()                                                             \
   {                                                                            \
@@ -75,49 +76,53 @@ void printi512n(i512 x) { printi512(x), printn(); }
 
 #ifndef SDCC
 void printf16(f16 x) {
-  f16part y = *(f16part *)&x;
-  if (y.sign)
+  u16 y = *(u16 *)&x;
+  i8 exp = y >> 10;
+  y &= 0x03ff;
+  if (exp & 32) {
+    exp &= 31;
     printneg();
-  if (y.exp != 31) {
-    u16 tmp = x;
-    printu16(tmp);
-    x -= tmp;
-    if (x) {
-      printc('.');
-      u32 frac = x * 1e10 + 0.5;
-      char buf[11];
-      memset(buf, '0', 10);
-      u8 i = 10, rem;
-      while (1) {
-        rem = frac % 10;
-        frac /= 10;
-        if (rem)
-          break;
-        --i;
+  }
+  if (exp) {
+    if (exp == 31) {
+      if (y) {
+        prints("nan");
+        printu16(y);
+        return;
       }
-      buf[i] = 0;
-      buf[--i] += rem;
-      while (frac) {
-        buf[--i] += frac % 10;
-        frac /= 10;
-      }
-      prints(buf);
+      prints("inf");
+      return;
     }
-    // printfrac();
+    y |= 0x0400;
+    exp -= 25;
+    if (exp >= 0) {
+      printu16(y << exp);
+      return;
+    }
+    exp = -exp;
+    printu128((u128)y * powu64(5, exp));
+    prints("e-");
+    printu8(exp);
     return;
   }
-  if (y.frac) {
-    prints("nan");
-    printu16(y.frac);
-    return;
-  }
-  prints("inf");
-  return;
+  printu128((u128)y * 59604644775390625);
+  prints("e-24");
+
+  //   u8 e10 = flr32(lgf32(x));
+  //   x /= e10f32(e10);
+  //   u8 digit = x;
+  //   x -= digit;
+  //   printdigit(digit);
+  //   printc('.');
+  //   u16 frac = x * 1e3 + 0.5;
+  //   printdigit(frac / 100 % 10);
+  //   printdigit(frac / 10 % 10);
+  //   printdigit(frac % 10);
+  //   printc('E');
+  //   printi8(e10);
+  //   return;
 }
-void printf16n(f16 x) {
-  printf16(x);
-  printn();
-}
+void printf16n(f16 x) { printf16(x), printn(); }
 #endif
 
 // void printf32(f32 x) {
