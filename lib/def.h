@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <tgmath.h>
 
 // #define SQRT5 2.23606797749978969640917366873127624q
 // #define SQRT1_5 0.44721359549995793928183473374625525q
@@ -56,6 +57,12 @@ typedef unsigned _BitInt(8192) u8k;
 typedef _Float16 f16;
 typedef __float128 f128;
 
+typedef _Complex _Float16 c16;
+typedef _Complex float c32;
+typedef _Complex double c64;
+typedef _Complex long double c80;
+typedef __float128 _Complex c128;
+
 typedef struct {
   u16 frac : 10, exp : 5, sign : 1;
 } f16part;
@@ -74,5 +81,7 @@ typedef struct {
 } f128part;
 
 typedef f64 f64x2 __attribute__((vector_size(16)));
+typedef f32 f32x2 __attribute__((vector_size(8)));
+
 #endif
 #endif

@@ -18,11 +18,11 @@ int main(void) {
   //       "movl	    $51, %edi \n\t"
   //       "callq	putc@PLT");
   // f128 a = 4,b = 4;
-  //   f64x2 a = {3,4};
-  u8 tmp = 1;
-//   f16 a = *(f16 *)&tmp;
-u256 a = tmp << 100;
-  printi16(__builtin_log10f(a));
-  //   printf("%f",__builtin_hypot(a[0],a[1]));
+    f32x2 a = {3,4};
+  //   f16 a = *(f16 *)&tmp;
+//   printi16(_popcnt32(a));
+    printf("%f\n",hypot(a[0],a[1]));
+    printf("%.30f",sin(a[1]));
+
   //   printu128(*(u128 *)&a);
 }
