@@ -31,17 +31,37 @@ typedef struct {
   uint8_t h0 : 4, h1 : 4, h2 : 4, h3 : 4;
 } hex4;
 
+
+typedef float f32;
+typedef double f64;
+typedef long double f80;
+
+#ifndef SDCC
+typedef __int128 i128;
+typedef __uint128_t u128;
+
+typedef _BitInt(256) i256;
+typedef unsigned _BitInt(256) u256;
+typedef _BitInt(512) i512;
+typedef unsigned _BitInt(512) u512;
+typedef _BitInt(1024) i1k;
+typedef unsigned _BitInt(1024) u1k;
+typedef _BitInt(2048) i2k;
+typedef unsigned _BitInt(2048) u2k;
+typedef _BitInt(4096) i4k;
+typedef unsigned _BitInt(4096) u4k;
+typedef _BitInt(8192) i8k;
+typedef unsigned _BitInt(8192) u8k;
+
+typedef _Float16 f16;
+typedef __float128 f128;
+
 typedef struct {
   u16 frac : 10, exp : 5, sign : 1;
 } f16part;
-// typedef struct {
-//   u32 frac : 23, exp : 8, sign : 1;
-// } f32part;
-typedef struct{
-  _BitInt(23) frac;
-  u8 exp,sign : 1;
-
-}f32part;
+typedef struct {
+  u32 frac : 23, exp : 8, sign : 1;
+} f32part;
 typedef struct {
   u64 frac : 52, exp : 11, sign : 1;
 } f64part;
@@ -49,19 +69,6 @@ typedef struct {
   u64 frac;
   u16 exp : 15, sign : 1;
 } f80part;
-
-typedef float f32;
-typedef double f64;
-typedef long double f80;
-
-#ifndef SDCC
-typedef __uint128_t u128;
-typedef __int128 i128;
-
-typedef unsigned _BitInt(256) u256;
-
-typedef _Float16 f16;
-typedef __float128 f128;
 typedef struct {
   u128 frac : 112, exp : 15, sign : 1;
 } f128part;

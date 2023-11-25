@@ -20,7 +20,8 @@ int main(void) {
   // f128 a = 4,b = 4;
   //   f64x2 a = {3,4};
   u8 tmp = 1;
-  f16 a = *(f16 *)&tmp;
+//   f16 a = *(f16 *)&tmp;
+u256 a = tmp << 100;
   printi16(__builtin_log10f(a));
   //   printf("%f",__builtin_hypot(a[0],a[1]));
   //   printu128(*(u128 *)&a);

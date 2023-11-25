@@ -41,77 +41,40 @@
 
 static inline void printu8(u8 x) { printuint(3); }
 static inline void printi8(i8 x) { printint(3); }
-static inline void printu8n(u8 x) {
-  printu8(x);
-  printn();
-}
-static inline void printi8n(i8 x) {
-  printi8(x);
-  printn();
-}
+static inline void printu8n(u8 x) { printu8(x), printn(); }
+static inline void printi8n(i8 x) { printi8(x), printn(); }
 
 static inline void printu16(u16 x) { printuint(5); }
 static inline void printi16(i16 x) { printint(5); }
-static inline void printu16n(u16 x) {
-  printu16(x);
-  printn();
-}
-static inline void printi16n(i16 x) {
-  printi16(x);
-  printn();
-}
+static inline void printu16n(u16 x) { printu16(x), printn(); }
+static inline void printi16n(i16 x) { printi16(x), printn(); }
 
 static inline void printu32(u32 x) { printuint(10); }
 static inline void printi32(i32 x) { printint(10); }
-static inline void printu32n(u32 x) {
-  printu32(x);
-  printn();
-}
-static inline void printi32n(i32 x) {
-  printi32(x);
-  printn();
-}
+static inline void printu32n(u32 x) { printu32(x), printn(); }
+static inline void printi32n(i32 x) { printi32(x), printn(); }
 
 static inline void printu64(u64 x) { printuint(20); }
 static inline void printi64(i64 x) { printint(20); }
-static inline void printu64n(u64 x) {
-  printu64(x);
-  printn();
-}
-static inline void printi64n(i64 x) {
-  printi64(x);
-  printn();
-}
+static inline void printu64n(u64 x) { printu64(x), printn(); }
+static inline void printi64n(i64 x) { printi64(x), printn(); }
 
 #ifndef SDCC
 static inline void printu128(u128 x) { printuint(39); }
 static inline void printi128(i128 x) { printint(39); }
-static inline void printu128n(u128 x) {
-  printu128(x);
-  printn();
-}
-static inline void printi128n(i128 x) {
-  printi128(x);
-  printn();
-}
+static inline void printu128n(u128 x) { printu128(x), printn(); }
+static inline void printi128n(i128 x) { printi128(x), printn(); }
 
 static inline void printu256(u256 x) { printuint(78); }
+static inline void printi256(i256 x) { printint(78); }
+static inline void printu256n(u256 x) { printu256(x), printn(); }
+static inline void printi256n(i256 x) { printi256(x), printn(); }
 
+static inline void printu512(u512 x) { printuint(155); }
+static inline void printi512(i512 x) { printint(155); }
+static inline void printu512n(u512 x) { printu512(x), printn(); }
+static inline void printi512n(i512 x) { printi512(x), printn(); }
 #endif
-
-#define printfrac()                                                            \
-  {                                                                            \
-    printc('.');                                                               \
-    u8 trunc;                                                                  \
-    while (x) {                                                                \
-      x *= 10;                                                                 \
-      trunc = x;                                                               \
-      x -= trunc;                                                              \
-      putdigit(trunc);                                                         \
-    }                                                                          \
-  }
-
-#define FIX_MIN 0.001
 
 #ifndef SDCC
 // static inline void printf16(f16 x) {
