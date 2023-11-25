@@ -41,7 +41,7 @@ static inline void benchu32(u32 func(u32)) {
 static inline void benchu32cmp(u32 func1(u32), u32 func2(u32)) {
   u32 *array, sum = 0, sum1, sum2;
   u64 dt, dt1, dt2;
-  usize i, j;
+  usize i;
   struct timespec t0, t1;
   srand(time(NULL));
   dt1 = dt2 = 0;
@@ -97,14 +97,6 @@ static inline void benchu32cmp(u32 func1(u32), u32 func2(u32)) {
     sum1 = sum2 = sum;
     dt = (t1.tv_sec - t0.tv_sec) * G + t1.tv_nsec - t0.tv_nsec;
 
-    // measure bench time 1
-    i = 0;
-    clock_gettime(CLOCK_REALTIME, &t0);
-    while (i < N)
-      sum1 += func1(array[i++]);
-    clock_gettime(CLOCK_REALTIME, &t1);
-    dt1 += (t1.tv_sec - t0.tv_sec) * G + t1.tv_nsec - t0.tv_nsec - dt;
-
     // measure bench time 2
     i = 0;
     clock_gettime(CLOCK_REALTIME, &t0);
@@ -112,6 +104,14 @@ static inline void benchu32cmp(u32 func1(u32), u32 func2(u32)) {
       sum2 += func2(array[i++]);
     clock_gettime(CLOCK_REALTIME, &t1);
     dt2 += (t1.tv_sec - t0.tv_sec) * G + t1.tv_nsec - t0.tv_nsec - dt;
+
+    // measure bench time 1
+    i = 0;
+    clock_gettime(CLOCK_REALTIME, &t0);
+    while (i < N)
+      sum1 += func1(array[i++]);
+    clock_gettime(CLOCK_REALTIME, &t1);
+    dt1 += (t1.tv_sec - t0.tv_sec) * G + t1.tv_nsec - t0.tv_nsec - dt;
 
     assert(sum1 == sum2);
   }

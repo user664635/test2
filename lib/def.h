@@ -3,8 +3,8 @@
 
 #include <math.h>
 #include <stdint.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 // #define SQRT5 2.23606797749978969640917366873127624q
 // #define SQRT1_5 0.44721359549995793928183473374625525q
@@ -18,31 +18,11 @@ typedef uint32_t u32;
 typedef uint64_t u64;
 typedef size_t usize;
 
-typedef uint_fast8_t fu8;
-typedef uint_fast16_t fu16;
-typedef uint_fast32_t fu32;
-typedef uint_fast64_t fu64;
-
-typedef uint_least8_t lu8;
-typedef uint_least16_t lu16;
-typedef uint_least32_t lu32;
-typedef uint_least64_t lu64;
-
 typedef int8_t i8;
 typedef int16_t i16;
 typedef int32_t i32;
 typedef int64_t i64;
 // typedef ssize_t isize;
-
-typedef int_fast8_t fi8;
-typedef int_fast16_t fi16;
-typedef int_fast32_t fi32;
-typedef int_fast64_t fi64;
-
-typedef int_least8_t li8;
-typedef int_least16_t li16;
-typedef int_least32_t li32;
-typedef int_least64_t li64;
 
 typedef struct {
   uint8_t b0 : 1, b1 : 1, b2 : 1, b3 : 1, b4 : 1, b5 : 1, b6 : 1, b7 : 1;

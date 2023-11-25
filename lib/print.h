@@ -39,46 +39,46 @@
   printsign();                                                                 \
   printuint(digit);
 
-static inline void printu8(fu8 x) { printuint(3); }
-static inline void printi8(fi8 x) { printint(3); }
-static inline void printu8n(fu8 x) {
+static inline void printu8(u8 x) { printuint(3); }
+static inline void printi8(i8 x) { printint(3); }
+static inline void printu8n(u8 x) {
   printu8(x);
   printn();
 }
-static inline void printi8n(fi8 x) {
+static inline void printi8n(i8 x) {
   printi8(x);
   printn();
 }
 
-static inline void printu16(fu16 x) { printuint(5); }
-static inline void printi16(fi16 x) { printint(5); }
-static inline void printu16n(fu16 x) {
+static inline void printu16(u16 x) { printuint(5); }
+static inline void printi16(i16 x) { printint(5); }
+static inline void printu16n(u16 x) {
   printu16(x);
   printn();
 }
-static inline void printi16n(fi16 x) {
+static inline void printi16n(i16 x) {
   printi16(x);
   printn();
 }
 
-static inline void printu32(fu32 x) { printuint(10); }
-static inline void printi32(fi32 x) { printint(10); }
-static inline void printu32n(fu32 x) {
+static inline void printu32(u32 x) { printuint(10); }
+static inline void printi32(i32 x) { printint(10); }
+static inline void printu32n(u32 x) {
   printu32(x);
   printn();
 }
-static inline void printi32n(fi32 x) {
+static inline void printi32n(i32 x) {
   printi32(x);
   printn();
 }
 
-static inline void printu64(fu64 x) { printuint(20); }
-static inline void printi64(fi64 x) { printint(20); }
-static inline void printu64n(fu64 x) {
+static inline void printu64(u64 x) { printuint(20); }
+static inline void printi64(i64 x) { printint(20); }
+static inline void printu64n(u64 x) {
   printu64(x);
   printn();
 }
-static inline void printi64n(fi64 x) {
+static inline void printi64n(i64 x) {
   printi64(x);
   printn();
 }
@@ -99,7 +99,7 @@ static inline void printi128n(i128 x) {
 #define printfrac()                                                            \
   {                                                                            \
     printc('.');                                                               \
-    fu8 trunc;                                                                 \
+    u8 trunc;                                                                  \
     while (x) {                                                                \
       x *= 10;                                                                 \
       trunc = x;                                                               \
@@ -116,15 +116,15 @@ static inline void printf16(f16 x) {
   if (y.sign)
     printneg();
   if (y.exp != 31) {
-    fu16 tmp = x;
+    u16 tmp = x;
     printu16(tmp);
     x -= tmp;
     if (x) {
       printc('.');
-      fu32 frac = x * 1e10 + 0.5;
+      u32 frac = x * 1e10 + 0.5;
       char buf[11];
       memset(buf, '0', 10);
-      fu8 i = 10, rem;
+      u8 i = 10, rem;
       while (1) {
         rem = frac % 10;
         frac /= 10;
