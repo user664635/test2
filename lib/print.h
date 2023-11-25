@@ -77,50 +77,50 @@ static inline void printi512n(i512 x) { printi512(x), printn(); }
 #endif
 
 #ifndef SDCC
-// static inline void printf16(f16 x) {
-//   f16part y = *(f16part *)&x;
-//   if (y.sign)
-//     printneg();
-//   if (y.exp != 31) {
-//     u16 tmp = x;
-//     printu16(tmp);
-//     x -= tmp;
-//     if (x) {
-//       printc('.');
-//       u32 frac = x * 1e10 + 0.5;
-//       char buf[11];
-//       memset(buf, '0', 10);
-//       u8 i = 10, rem;
-//       while (1) {
-//         rem = frac % 10;
-//         frac /= 10;
-//         if (rem)
-//           break;
-//         --i;
-//       }
-//       buf[i] = 0;
-//       buf[--i] += rem;
-//       while (frac) {
-//         buf[--i] += frac % 10;
-//         frac /= 10;
-//       }
-//       prints(buf);
-//     }
-//     // printfrac();
-//     return;
-//   }
-//   if (y.frac) {
-//     prints("nan");
-//     printu16(y.frac);
-//     return;
-//   }
-//   prints("inf");
-//   return;
-// }
-// static inline void printf16n(f16 x) {
-//   printf16(x);
-//   printn();
-// }
+static inline void printf16(f16 x) {
+  f16part y = *(f16part *)&x;
+  if (y.sign)
+    printneg();
+  if (y.exp != 31) {
+    u16 tmp = x;
+    printu16(tmp);
+    x -= tmp;
+    if (x) {
+      printc('.');
+      u32 frac = x * 1e10 + 0.5;
+      char buf[11];
+      memset(buf, '0', 10);
+      u8 i = 10, rem;
+      while (1) {
+        rem = frac % 10;
+        frac /= 10;
+        if (rem)
+          break;
+        --i;
+      }
+      buf[i] = 0;
+      buf[--i] += rem;
+      while (frac) {
+        buf[--i] += frac % 10;
+        frac /= 10;
+      }
+      prints(buf);
+    }
+    // printfrac();
+    return;
+  }
+  if (y.frac) {
+    prints("nan");
+    printu16(y.frac);
+    return;
+  }
+  prints("inf");
+  return;
+}
+static inline void printf16n(f16 x) {
+  printf16(x);
+  printn();
+}
 #endif
 
 // static inline void printf32(f32 x) {
