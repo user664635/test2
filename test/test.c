@@ -26,6 +26,6 @@ int main(void) {
   // while (++i);
 } */
 
-static inline u32 builtinpopcount(u32 x) { return __builtin_popcount(x); }
-static inline u32 popcount(u32 x) { return popcountu32(x); }
+static inline u32 builtinpopcount(u32 x) { return __builtin_popcount((u16)x); }
+static inline u32 popcount(u32 x) { return popcountu16(x); }
 int main(void) { benchu32cmp(popcount, builtinpopcount); }

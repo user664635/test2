@@ -3,7 +3,7 @@
 #include <time.h>
 
 #define G 1000000000
-#define N 100000000
+#define N 1000000
 #define N0 10
 
 static inline void benchu32(u32 func(u32)) {

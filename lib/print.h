@@ -94,6 +94,9 @@ static inline void printi128n(i128 x) {
   printi128(x);
   printn();
 }
+
+static inline void printu256(u256 x) { printuint(78); }
+
 #endif
 
 #define printfrac()                                                            \
@@ -111,65 +114,65 @@ static inline void printi128n(i128 x) {
 #define FIX_MIN 0.001
 
 #ifndef SDCC
-static inline void printf16(f16 x) {
-  f16part y = *(f16part *)&x;
-  if (y.sign)
-    printneg();
-  if (y.exp != 31) {
-    u16 tmp = x;
-    printu16(tmp);
-    x -= tmp;
-    if (x) {
-      printc('.');
-      u32 frac = x * 1e10 + 0.5;
-      char buf[11];
-      memset(buf, '0', 10);
-      u8 i = 10, rem;
-      while (1) {
-        rem = frac % 10;
-        frac /= 10;
-        if (rem)
-          break;
-        --i;
-      }
-      buf[i] = 0;
-      buf[--i] += rem;
-      while (frac) {
-        buf[--i] += frac % 10;
-        frac /= 10;
-      }
-      prints(buf);
-    }
-    // printfrac();
-    return;
-  }
-  if (y.frac) {
-    prints("nan");
-    printu16(y.frac);
-    return;
-  }
-  prints("inf");
-  return;
-}
-static inline void printf16n(f16 x) {
-  printf16(x);
-  printn();
-}
+// static inline void printf16(f16 x) {
+//   f16part y = *(f16part *)&x;
+//   if (y.sign)
+//     printneg();
+//   if (y.exp != 31) {
+//     u16 tmp = x;
+//     printu16(tmp);
+//     x -= tmp;
+//     if (x) {
+//       printc('.');
+//       u32 frac = x * 1e10 + 0.5;
+//       char buf[11];
+//       memset(buf, '0', 10);
+//       u8 i = 10, rem;
+//       while (1) {
+//         rem = frac % 10;
+//         frac /= 10;
+//         if (rem)
+//           break;
+//         --i;
+//       }
+//       buf[i] = 0;
+//       buf[--i] += rem;
+//       while (frac) {
+//         buf[--i] += frac % 10;
+//         frac /= 10;
+//       }
+//       prints(buf);
+//     }
+//     // printfrac();
+//     return;
+//   }
+//   if (y.frac) {
+//     prints("nan");
+//     printu16(y.frac);
+//     return;
+//   }
+//   prints("inf");
+//   return;
+// }
+// static inline void printf16n(f16 x) {
+//   printf16(x);
+//   printn();
+// }
 #endif
 
-static inline void printf32(f32 x) {
+// static inline void printf32(f32 x) {
 
-  if (x < 10) {
-    printc('0' + x);
-    return;
-  }
-  char str[100];
-  uint_fast8_t i = 0;
-  for (; x; x /= 10)
-    str[i++] = x - x / 10 + '0';
-  while (i)
-    printc(str[--i]);
-}
+//   if (x < 10) {
+//     printc('0' + x);
+//     return;
+//   }
+//   char str[100];
+//   uint_fast8_t i = 0;
+//   for (; x; x /= 10)
+//     str[i++] = x - x / 10 + '0';
+//   while (i)
+//     printc(str[--i]);
+// }
 
 #ifndef SDCC
 static inline void printf128(f128 x) {

@@ -1,34 +1,18 @@
 #include <8052.h>
+#include "../lib/def.h"
 #define LOW
 // #include "low.c"
-
-void idle(void){}
-#define print idle
-#define printn idle
-#define printc idle
-
-#include "../lib/print.h"
 
 int main(void) {
   // init();
   // uint8_t t0, t1;
   // uint16_t x = 0;
-  uint32_t c = 0;
+  // bool a;
+  u32 c = 0;
+  _BitInt(65) a;
+  // __asm inline ("");
   P2 = 0b10011111;
   while (1) {
-
-    // uint16_t t;
-    // gett(t, P3_7);
-    // uart_send_str(" 温度:");
-    // uart_send_str(ttoa(t, str));
-    // uart_send_str(" 电阻:");
-    // uart_send_str(u16toax(u8zt2046(0b10010100), str));
-    // uart_send_str(" 光敏:");
-    // uart_send_str(u16toax(u8zt2046(0b10100100), str));
-    // uart_send_str(" 热敏:");
-    // uart_send_str(u16toax(u8zt2046(0b11010100), str));
-    // uart_send_str(" 外部:");
-    // uart_send_str(u16toax(u8zt2046(0b11100100), str));
 
     // uint8_t a = (at24c02_read_byte_inaddr(100));
     // ++a;
