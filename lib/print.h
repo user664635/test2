@@ -5,10 +5,12 @@
 
 #ifndef print
 #include <stdio.h>
-#define print(str) fputs(str, stdout)
+#define prints(str) fputs(str, stdout)
 #define printc(x) putchar(x)
 #define printn() putchar('\n')
 #endif
+
+#define printsn(str) prints(str), printn()
 
 #define putdigit(x) printc(x + '0')
 #define printuint(digit)                                                       \
@@ -136,17 +138,17 @@ static inline void printf16(f16 x) {
         buf[--i] += frac % 10;
         frac /= 10;
       }
-      print(buf);
+      prints(buf);
     }
     // printfrac();
     return;
   }
   if (y.frac) {
-    print("nan");
+    prints("nan");
     printu16(y.frac);
     return;
   }
-  print("inf");
+  prints("inf");
   return;
 }
 static inline void printf16n(f16 x) {
@@ -173,9 +175,9 @@ static inline void printf32(f32 x) {
 static inline void printf128(f128 x) {
   printsign();
   u128 y = *(u128 *)&x;
-  print("(1+");
+  prints("(1+");
   printu128(y << 16 >> 16);
-  print("/2^112)*2^");
+  prints("/2^112)*2^");
   printi16((y >> 112) - 16383);
 }
 #endif

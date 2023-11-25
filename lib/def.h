@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 
 // #define SQRT5 2.23606797749978969640917366873127624q
 // #define SQRT1_5 0.44721359549995793928183473374625525q

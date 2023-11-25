@@ -24,6 +24,8 @@
   if (tmp < 10)                                                                \
   x = tmp, y += n
 
+static inline fu8 logu8(fu8 x) __attribute__((const));
+
 static inline fu8 logu8(fu8 x) {
   fu8 y = 0, tmp;
   dx2py(4);
