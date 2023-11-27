@@ -23,14 +23,19 @@ typedef int32_t i32;
 typedef int64_t i64;
 // typedef ssize_t isize;
 
-typedef struct {
-  uint8_t b0 : 1, b1 : 1, b2 : 1, b3 : 1, b4 : 1, b5 : 1, b6 : 1, b7 : 1;
+typedef union {
+  struct {
+    u8 b0 : 1, b1 : 1, b2 : 1, b3 : 1, b4 : 1, b5 : 1, b6 : 1, b7 : 1;
+  };
+  u8 b;
 } bit8;
 
-typedef struct {
-  uint8_t h0 : 4, h1 : 4, h2 : 4, h3 : 4;
+typedef union {
+  struct {
+    u8 h0 : 4, h1 : 4, h2 : 4, h3 : 4;
+  };
+  u16 h;
 } hex4;
-
 
 typedef float f32;
 typedef double f64;
@@ -42,7 +47,7 @@ typedef struct {
 } f16d;
 
 #ifndef SDCC
-typedef __int128 i128;
+typedef __int128_t i128;
 typedef __uint128_t u128;
 
 typedef _BitInt(256) i256;

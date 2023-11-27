@@ -146,21 +146,14 @@ i16 lgf128(f128 x) {
   return y;
 }
 
-#define pu8()                                                                  \
-  y *= y;                                                                      \
-  if (n & 0x80)                                                                \
-    y *= x;                                                                    \
-  n <<= 1
-
 u128 powu64(u64 x, u8 n) {
   u128 y = 1;
-  pu8();
-  pu8();
-  pu8();
-  pu8();
-  pu8();
-  pu8();
-  pu8();
-  pu8();
-  return y;
+  while (1) {
+    if (n & 1)
+      y *= x;
+    n >>= 1;
+    if (!n)
+      return y;
+    x *= x;
+  }
 }
