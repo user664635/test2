@@ -13,11 +13,11 @@ void printdigit(char x) { printc(x + '0'); }
 
 #define printuint(digit)                                                       \
   if (x < 10) {                                                                \
-    printc('0' + x);                                                           \
+    printdigit(x);                                                             \
     return;                                                                    \
   }                                                                            \
   char str[digit];                                                             \
-  uint_fast8_t i = 0;                                                          \
+  u8 i = 0;                                                                    \
   for (; x; x /= 10)                                                           \
     str[i++] = x % 10;                                                         \
   while (i)                                                                    \

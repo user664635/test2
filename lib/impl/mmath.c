@@ -157,3 +157,16 @@ u128 powu64(u64 x, u8 n) {
     x *= x;
   }
 }
+
+u64 C(u32 n, u32 k) {
+  if (k > n >> 1)
+    k = n - k;
+  if (!k)
+    return 1;
+  u64 res = n, tmp = k;
+  while (k > 1) {
+    res *= --n;
+    tmp *= --k;
+  }
+  return res / tmp;
+}

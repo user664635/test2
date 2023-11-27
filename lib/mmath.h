@@ -59,6 +59,8 @@ static inline u8 lgu128(u128 x) __attribute__((const));
 static inline i16 logf128(f128 x) __attribute__((const));
 static inline i16 lgf128(f128 x) __attribute__((const));
 
+static inline u64 C(u32, u32);
+
 #include "impl/mmath.c"
 
 #endif
